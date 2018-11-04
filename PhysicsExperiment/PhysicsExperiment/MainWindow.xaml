@@ -1,0 +1,16 @@
+﻿<Window x:Class="PhysicsExperiment.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PhysicsExperiment"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="480" Width="960">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="449" VerticalAlignment="Top" Width="952" Source="TestRoom.png"/>
+
+        <Rectangle x:Name="PlayerBox" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="50" Margin="281,3,0,0" Stroke="Black" VerticalAlignment="Top" Width="50"/>
+        <Rectangle x:Name="Floor" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="63" Margin="107,326,0,0" Stroke="Black" VerticalAlignment="Top" Width="454"/>
+
+    </Grid>
+</Window>
