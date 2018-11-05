@@ -44,6 +44,7 @@ namespace PhysicsExperiment
             tickTimer.Tick += FrameTick;
 
             Collision.AddColliderFromRectangle(Floor);
+            Collision.AddColliderFromRectangle(Wall);
             lastFrame = DateTime.Now;
 
             Player player1 = new Player(PlayerBox);

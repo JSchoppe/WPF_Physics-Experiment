@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows;
+using static System.Math;
 
 namespace PhysicsExperiment
 {
@@ -12,38 +13,36 @@ namespace PhysicsExperiment
     {
         private static List<BoxCollider> sceneColliders = new List<BoxCollider>();
 
-
-        public static bool RectangleDownCast(Rectangle toCast)
+        public static BoxCollider RectangleCast(BoxCollider toCast)
         {
-            BoxCollider toCastAsCollider = new BoxCollider(toCast);
-
             foreach (BoxCollider collider in sceneColliders)
             {
-                if (collider.leftEdge < toCastAsCollider.rightEdge && collider.rightEdge > toCastAsCollider.leftEdge)
+                if (BoxCollider.Overlapping(collider, toCast))
                 {
-                    if (toCastAsCollider.bottomEdge >= collider.topEdge && toCastAsCollider.bottomEdge < collider.bottomEdge)
-                    {
-                        toCast.Margin = new Thickness(toCast.Margin.Left, collider.topEdge - toCast.Height, toCast.Margin.Right, toCast.Margin.Bottom);
-                        return true;
-                    }
+                    return collider;
                 }
             }
-
-            return false;
+            return null;
         }
+
+
 
         public static void AddColliderFromRectangle(Rectangle rectangleObject)
         {
             sceneColliders.Add(new BoxCollider(rectangleObject));
         }
+
     }
 
-    class BoxCollider
+    public class BoxCollider
     {
         public double topEdge = 0;
         public double bottomEdge = 0;
         public double leftEdge = 0;
         public double rightEdge = 0;
+
+        public double width = 0;
+        public double height = 0;
 
         public BoxCollider (Rectangle rect)
         {
@@ -52,8 +51,115 @@ namespace PhysicsExperiment
 
             leftEdge = rect.Margin.Left;
             rightEdge = rect.Margin.Left + rect.Width;
+
+            width = rect.Width;
+            height = rect.Height;
+        }
+
+        public void Move(Vector offset)
+        {
+            topEdge += offset.Y;
+            bottomEdge += offset.Y;
+
+            leftEdge += offset.X;
+            rightEdge += offset.X;
+        }
+
+        public bool ProjectionCast(Vector offset)
+        {
+            Move(offset);
+
+            BoxCollider collision = Collision.RectangleCast(this);
+
+            Move(-offset);
+
+            if (collision != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>Determines if two box colliders are overlapping</summary>
+        /// <param name="A">Box A</param>
+        /// <param name="B">Box B</param>
+        /// <returns>True if these two boxes are overlapping</returns>
+        public static bool Overlapping(BoxCollider A, BoxCollider B)
+        {
+            // Collider intersection is based on coordinate overlap.
+            //
+            //       o----------o
+            //       Al         Ar
+            //                     Bl  Br
+            //                     o---o
+            //
+            // If both Bleft and Bright are greater than Aright, or the inverse,
+            // then the colliders are not overlapping on this axis.
+
+            if (B.leftEdge >= A.rightEdge && B.rightEdge >= A.rightEdge)
+            {
+                return false;
+            }
+            else if (B.leftEdge <= A.leftEdge && B.rightEdge <= A.leftEdge)
+            {
+                return false;
+            }
+            else if (B.bottomEdge <= A.topEdge && B.topEdge <= A.topEdge)
+            {
+                return false;
+            }
+            else if (B.bottomEdge >= A.bottomEdge && B.topEdge >= A.bottomEdge)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>Pushes one collider out of another</summary>
+        /// <param name="pushThis">The collider that will be moved</param>
+        /// <param name="outOfThis">The static collider that will be pushing</param>
+        public static void PushOut(ref BoxCollider pushThis, BoxCollider outOfThis)
+        {
+            // Calculate the magnitude of push required to seperate these colliders in each direction.
+            double rightPush = Abs(outOfThis.rightEdge - pushThis.leftEdge);
+            double leftPush = Abs(outOfThis.leftEdge - pushThis.rightEdge);
+            double upPush = Abs(outOfThis.topEdge - pushThis.bottomEdge);
+            double downPush = Abs(outOfThis.bottomEdge - pushThis.topEdge);
+
+            double[] pushVals = { rightPush, leftPush, upPush, downPush };
+
+            switch (Utilities.IndexOfSmallest(pushVals))
+            {
+                // Push out to the right.
+                case 0:
+                    pushThis.leftEdge = outOfThis.rightEdge;
+                    pushThis.rightEdge = outOfThis.rightEdge + pushThis.width;
+                    break;
+
+                // Push out to the left.
+                case 1:
+                    pushThis.leftEdge = outOfThis.leftEdge - pushThis.width;
+                    pushThis.rightEdge = outOfThis.leftEdge;
+                    break;
+
+                // Push out to the top.
+                case 2:
+                    pushThis.topEdge = outOfThis.topEdge - pushThis.height;
+                    pushThis.bottomEdge = outOfThis.topEdge;
+                    break;
+
+                // Push out to the bottom.
+                case 3:
+                    pushThis.topEdge = outOfThis.bottomEdge;
+                    pushThis.bottomEdge = outOfThis.bottomEdge + pushThis.height;
+                    break;
+            }
         }
     }
-
-
 }

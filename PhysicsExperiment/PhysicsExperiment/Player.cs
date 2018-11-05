@@ -29,14 +29,17 @@ namespace PhysicsExperiment
     public class Player
     {
 
-        public double speed = 120;
-        public double jump = 250;
+        public double speed = 250;
+        public double jump = 600;
 
         private bool takeoff = false;
         private int takeOffChecks = 0;
         private bool inAir = false;
 
-        private Rectangle hitBox;
+        private BoxCollider hitbox;
+
+
+        private Rectangle avatar;
 
         // Projectile motion programmed using these formulas.
         // https://formulas.tutorvista.com/physics/projectile-motion-formula.html
@@ -47,12 +50,20 @@ namespace PhysicsExperiment
 
         public Player(Rectangle playerHitBox)
         {
-            hitBox = playerHitBox;
+            avatar = playerHitBox;
+            hitbox = new BoxCollider(avatar);
         }
 
         public void Update(object sender, EventArgs e)
         {
-            bool floorBelow = Collision.RectangleDownCast(hitBox);
+            Vector movement = new Vector();
+
+
+            bool floorBelow = false;
+            if (hitbox.ProjectionCast(new Vector(0, 0.4)))
+            {
+                floorBelow = true;
+            }
 
             if (inAir)
             {
@@ -62,7 +73,7 @@ namespace PhysicsExperiment
                     {
                         takeoff = false;
 
-                        UpdateElevation();
+                        movement.Y += UpdateElevation();
                     }
                     else
                     {
@@ -71,7 +82,7 @@ namespace PhysicsExperiment
                 }
                 else
                 {
-                    UpdateElevation();
+                    movement.Y += UpdateElevation();
                 }
             }
             else
@@ -80,7 +91,7 @@ namespace PhysicsExperiment
                 {
                     if (Keyboard.IsKeyDown(Key.Space))
                     {
-                        initialY = hitBox.Margin.Top;
+                        initialY = hitbox.topEdge;
                         initialAirVelocity = jump;
                         airTime = 0;
 
@@ -91,7 +102,7 @@ namespace PhysicsExperiment
                 }
                 else
                 {
-                    initialY = hitBox.Margin.Top;
+                    initialY = hitbox.topEdge;
                     initialAirVelocity = 0;
                     airTime = 0;
 
@@ -101,23 +112,38 @@ namespace PhysicsExperiment
 
             if (Keyboard.IsKeyDown(Key.D))
             {
-                hitBox.Margin = new Thickness(hitBox.Margin.Left + Game.deltaTime *speed, hitBox.Margin.Top, hitBox.Margin.Right, hitBox.Margin.Bottom);
+                movement.X += speed * Game.deltaTime;
             }
 
             if (Keyboard.IsKeyDown(Key.A))
             {
-                hitBox.Margin = new Thickness(hitBox.Margin.Left - Game.deltaTime * speed, hitBox.Margin.Top, hitBox.Margin.Right, hitBox.Margin.Bottom);
+                movement.X -= speed * Game.deltaTime;
             }
+
+            hitbox.Move(movement);
+
+            BoxCollider collision = Collision.RectangleCast(hitbox);
+            if (collision != null)
+            {
+                BoxCollider.PushOut(ref hitbox, collision);
+            }
+
+            DrawPlayer();
+
         }
 
-        private void UpdateElevation()
+
+        private void DrawPlayer()
+        {
+            avatar.Margin = new Thickness(hitbox.leftEdge, hitbox.topEdge, avatar.Margin.Right, avatar.Margin.Bottom);
+        }
+
+        private double UpdateElevation()
         {
             airTime += Game.deltaTime;
 
             // The relative Y is calculated for a Y up world.
-            double relativeY = initialAirVelocity * airTime - 0.5 * Game.gravity * Math.Pow(airTime, 2.0);
-
-            hitBox.Margin = new Thickness(hitBox.Margin.Left, initialY - relativeY, hitBox.Margin.Right, hitBox.Margin.Bottom);
+            return -(initialAirVelocity * airTime - 0.5 * Game.gravity * Math.Pow(airTime, 2.0)) + (initialY - hitbox.topEdge);
         }
     }
 }
