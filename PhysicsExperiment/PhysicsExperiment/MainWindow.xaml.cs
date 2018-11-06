@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Drawing;
 
 namespace PhysicsExperiment
 {
@@ -37,14 +38,14 @@ namespace PhysicsExperiment
             // DispatcherTimer
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.threading.dispatchertimer?redirectedfrom=MSDN&view=netframework-4.7.2
 
-            // Set the tick timer to run a 50 hertz.
-            tickTimer.Interval = TimeSpan.FromSeconds(0.02);
+            // Set the tick timer to run a 60 hertz.
+            tickTimer.Interval = TimeSpan.FromSeconds(1/60.00);
 
             // Call frameTick whenever this timer ticks.
             tickTimer.Tick += FrameTick;
 
-            Collision.AddColliderFromRectangle(Floor);
-            Collision.AddColliderFromRectangle(Wall);
+            Mapping.ParseCollisionMap(new Bitmap("E:/Git/PhysicsExperiment/PhysicsExperiment/TestRoom.bmp"), new Vector(960, 480));
+
             lastFrame = DateTime.Now;
 
             Player player1 = new Player(PlayerBox);

@@ -11,7 +11,7 @@ namespace PhysicsExperiment
 {
     public static class Collision
     {
-        private static List<BoxCollider> sceneColliders = new List<BoxCollider>();
+        public static List<BoxCollider> sceneColliders = new List<BoxCollider>();
 
         public static BoxCollider RectangleCast(BoxCollider toCast)
         {
@@ -54,6 +54,18 @@ namespace PhysicsExperiment
 
             width = rect.Width;
             height = rect.Height;
+        }
+
+        public BoxCollider(double left, double top, double right, double bottom)
+        {
+            topEdge = top;
+            bottomEdge = bottom;
+
+            leftEdge = left;
+            rightEdge = right;
+
+            width = right - left;
+            height = bottom - top;
         }
 
         public void Move(Vector offset)

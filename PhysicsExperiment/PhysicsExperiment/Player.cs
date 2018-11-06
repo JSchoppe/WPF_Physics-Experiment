@@ -56,7 +56,7 @@ namespace PhysicsExperiment
 
         public void Update(object sender, EventArgs e)
         {
-            Vector movement = new Vector();
+            Vector movement = new Vector(0, -.001);
 
 
             bool floorBelow = false;
