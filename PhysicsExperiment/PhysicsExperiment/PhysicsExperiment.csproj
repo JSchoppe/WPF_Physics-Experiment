@@ -101,10 +101,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestRoom.bmp" />
+    <Resource Include="Resources\TestRoom.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TestArt.bmp" />
+    <Resource Include="Resources\TestArt.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

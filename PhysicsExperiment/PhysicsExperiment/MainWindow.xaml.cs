@@ -44,7 +44,9 @@ namespace PhysicsExperiment
             // Call frameTick whenever this timer ticks.
             tickTimer.Tick += FrameTick;
 
-            Mapping.ParseCollisionMap(new Bitmap("E:/Git/PhysicsExperiment/PhysicsExperiment/TestRoom.bmp"), new Vector(960, 480));
+            Game.Start();
+
+            Mapping.ParseCollisionMap(new Bitmap(Game.GetAssetPath("TestRoom.bmp")), new Vector(960, 480));
 
             lastFrame = DateTime.Now;
 

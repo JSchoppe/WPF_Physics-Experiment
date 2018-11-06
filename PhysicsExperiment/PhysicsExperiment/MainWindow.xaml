@@ -7,7 +7,7 @@
         mc:Ignorable="d" 
         Title="MainWindow" Height="511" Width="968">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="960" Source="TestArt.bmp"/>
+        <Image HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="960" Source="Resources/TestArt.bmp"/>
 
         <Rectangle x:Name="PlayerBox" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="50" Margin="317,86,0,0" Stroke="Black" VerticalAlignment="Top" Width="50"/>
 
