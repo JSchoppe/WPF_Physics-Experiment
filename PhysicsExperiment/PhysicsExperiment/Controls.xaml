@@ -1,12 +1,12 @@
-﻿<Window x:Class="PhysicsExperiment.MainWindow"
+﻿<Window x:Class="PhysicsExperiment.Controls"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhysicsExperiment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="511" Width="968" ResizeMode="NoResize">
-    <Grid x:Name="MainGrid">
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="423,231,0,0" VerticalAlignment="Top" Width="426" Height="88" Click="PlayButton_Click"/>
+        Title="Controls" Height="431" Width="808">
+    <Grid> 
+        
     </Grid>
 </Window>

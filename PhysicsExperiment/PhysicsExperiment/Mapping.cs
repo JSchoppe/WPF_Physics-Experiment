@@ -108,4 +108,11 @@ namespace PhysicsExperiment
             }
         }
     }
+
+    /// <summary>Represents one window of a world map</summary>
+    public class MapScreen
+    {
+        Bitmap collisionMap;
+    }
+
 }

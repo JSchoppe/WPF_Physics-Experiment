@@ -59,6 +59,12 @@ namespace PhysicsExperiment
             Vector movement = new Vector(0, -.001);
 
 
+            if (Keyboard.IsKeyDown(Key.E))
+            {
+                WindowManager.AddWindow();
+            }
+
+
             bool floorBelow = false;
             if (hitbox.ProjectionCast(new Vector(0, 0.4)))
             {
