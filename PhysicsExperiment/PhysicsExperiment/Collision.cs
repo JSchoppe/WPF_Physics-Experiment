@@ -146,7 +146,7 @@ namespace PhysicsExperiment
 
             double[] pushVals = { rightPush, leftPush, upPush, downPush };
 
-            switch (Utilities.IndexOfSmallest(pushVals))
+            switch (ProgrammingUtilities.IndexOfSmallest(pushVals))
             {
                 // Push out to the right.
                 case 0:

@@ -16,10 +16,13 @@ namespace PhysicsExperiment
         /// <summary>Uses a bitmap to populate static box colliders to a region</summary>
         /// <param name="collisionMap">The black and white collision bitmap</param>
         /// <param name="outputPixelSize">The resolution of the output client area</param>
-        public static void ParseCollisionMap(Bitmap collisionMap, Vector outputPixelSize)
+        public static BoxCollider[] ParseCollisionMap(Bitmap collisionMap)
         {
             // Generate an array to track which pixels have been accounted for.
             bool[,] filledPixels = new bool[collisionMap.Width, collisionMap.Height];
+
+            // Create a list that will keep track of the generated colliders.
+            List<BoxCollider> generatedColliders = new List<BoxCollider>();
 
             // Cycle through all the pixels in the image.
             for (int y = 0; y < collisionMap.Height; y++)
@@ -78,21 +81,24 @@ namespace PhysicsExperiment
                             }
                         }
 
-                        // Add this collider to the scene, scaling it to fit the client resolution.
-                        Collision.sceneColliders.Add(new BoxCollider
-                        (
-                            // Calculate the left edge of the collider.
-                            outputPixelSize.X * (x / (double)collisionMap.Width),
+                        // *****************THIS NEEDS TO BE MOVED TO WHENEVER A MAP IS LOADED!!!
+                        //// Add this collider to the scene, scaling it to fit the client resolution.
+                        //Collision.sceneColliders.Add(new BoxCollider
+                        //(
+                        //    // Calculate the left edge of the collider.
+                        //    outputPixelSize.X * (x / (double)collisionMap.Width),
 
-                            // Calculate the top edge of the collider.
-                            outputPixelSize.Y * (y / (double)collisionMap.Height),
+                        //    // Calculate the top edge of the collider.
+                        //    outputPixelSize.Y * (y / (double)collisionMap.Height),
 
-                            // Calculate the right edge of the collider.
-                            outputPixelSize.X * ((bottomRightX + 1) / (double)collisionMap.Width),
+                        //    // Calculate the right edge of the collider.
+                        //    outputPixelSize.X * ((bottomRightX + 1) / (double)collisionMap.Width),
 
-                            // Calculate the bottom edge of the collider.
-                            outputPixelSize.Y * ((bottomRightY + 1) / (double)collisionMap.Height)
-                        ));
+                        //    // Calculate the bottom edge of the collider.
+                        //    outputPixelSize.Y * ((bottomRightY + 1) / (double)collisionMap.Height)
+                        //));
+
+                        generatedColliders.Add(new BoxCollider(x, y, bottomRightX, bottomRightY));
 
                         // Now that the collider has been added, mark these tiles as complete.
                         // This ensures that they will be skipped over.
@@ -106,13 +112,9 @@ namespace PhysicsExperiment
                     }
                 }
             }
+
+            // Return the colliders as an array.
+            return generatedColliders.ToArray();
         }
     }
-
-    /// <summary>Represents one window of a world map</summary>
-    public class MapScreen
-    {
-        Bitmap collisionMap;
-    }
-
 }

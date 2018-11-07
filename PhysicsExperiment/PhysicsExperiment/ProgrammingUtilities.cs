@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhysicsExperiment
 {
-    public static class Utilities
+    public static class ProgrammingUtilities
     {
         public static int IndexOfSmallest(double[] numbers)
         {

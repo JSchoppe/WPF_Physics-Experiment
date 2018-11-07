@@ -33,7 +33,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="LockedItem.bmp"/>
+                    <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/InventoryLocked.png"/>
+                    <Image HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/InventoryLocked.png"/>
                 </Grid>
             </TabItem>
         </TabControl>
