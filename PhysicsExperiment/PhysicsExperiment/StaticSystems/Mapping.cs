@@ -81,24 +81,7 @@ namespace PhysicsExperiment
                             }
                         }
 
-                        // *****************THIS NEEDS TO BE MOVED TO WHENEVER A MAP IS LOADED!!!
-                        //// Add this collider to the scene, scaling it to fit the client resolution.
-                        //Collision.sceneColliders.Add(new BoxCollider
-                        //(
-                        //    // Calculate the left edge of the collider.
-                        //    outputPixelSize.X * (x / (double)collisionMap.Width),
-
-                        //    // Calculate the top edge of the collider.
-                        //    outputPixelSize.Y * (y / (double)collisionMap.Height),
-
-                        //    // Calculate the right edge of the collider.
-                        //    outputPixelSize.X * ((bottomRightX + 1) / (double)collisionMap.Width),
-
-                        //    // Calculate the bottom edge of the collider.
-                        //    outputPixelSize.Y * ((bottomRightY + 1) / (double)collisionMap.Height)
-                        //));
-
-                        generatedColliders.Add(new BoxCollider(x, y, bottomRightX, bottomRightY));
+                        generatedColliders.Add(new BoxCollider(x, y, bottomRightX + 1, bottomRightY - 1));
 
                         // Now that the collider has been added, mark these tiles as complete.
                         // This ensures that they will be skipped over.

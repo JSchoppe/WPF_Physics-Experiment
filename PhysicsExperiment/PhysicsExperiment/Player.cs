@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace PhysicsExperiment
 {
@@ -33,13 +34,12 @@ namespace PhysicsExperiment
         public double jump = 600;
 
         private bool takeoff = false;
-        private int takeOffChecks = 0;
         private bool inAir = false;
 
         private BoxCollider hitbox;
 
 
-        private Rectangle avatar;
+        private Image avatar;
 
         // Projectile motion programmed using these formulas.
         // https://formulas.tutorvista.com/physics/projectile-motion-formula.html
@@ -48,21 +48,25 @@ namespace PhysicsExperiment
         private double initialAirVelocity;
         private double airTime;
 
-        public Player(Rectangle playerHitBox)
+        public Player(Windows.Level inWindow)
         {
-            avatar = playerHitBox;
-            hitbox = new BoxCollider(avatar);
+
+            avatar = inWindow.PlayerSprite;
+
+            hitbox = new BoxCollider(
+                WindowManager.UnitarySpaceToWindowSpace(12),
+                WindowManager.UnitarySpaceToWindowSpace(3),
+                WindowManager.UnitarySpaceToWindowSpace(13),
+                WindowManager.UnitarySpaceToWindowSpace(5)
+            );
+
+            avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+            avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
         }
 
-        public void Update(object sender, EventArgs e)
+        public void Update()
         {
             Vector movement = new Vector(0, -.001);
-
-
-            if (Keyboard.IsKeyDown(Key.E))
-            {
-                WindowManager.AddWindow();
-            }
 
 
             bool floorBelow = false;
@@ -102,7 +106,6 @@ namespace PhysicsExperiment
                         airTime = 0;
 
                         takeoff = true;
-                        takeOffChecks = 0;
                         inAir = true;
                     }
                 }

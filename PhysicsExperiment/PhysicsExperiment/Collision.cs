@@ -25,6 +25,19 @@ namespace PhysicsExperiment
             return null;
         }
 
+        public static void SetCollidersFromNormalizedSet(BoxCollider[] colliders)
+        {
+            sceneColliders = colliders.ToList();
+
+            foreach (BoxCollider collider in sceneColliders)
+            {
+                collider.leftEdge = WindowManager.UnitarySpaceToWindowSpace(collider.leftEdge);
+                collider.rightEdge = WindowManager.UnitarySpaceToWindowSpace(collider.rightEdge);
+                collider.topEdge = WindowManager.UnitarySpaceToWindowSpace(collider.topEdge);
+                collider.bottomEdge = WindowManager.UnitarySpaceToWindowSpace(collider.bottomEdge);
+            }
+        }
+
 
 
         public static void AddColliderFromRectangle(Rectangle rectangleObject)

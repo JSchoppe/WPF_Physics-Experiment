@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhysicsExperiment"
         mc:Ignorable="d"
-        Title="Inventory" Height="431" Width="808" ResizeMode="NoResize">
+        Title="Inventory" Height="431" Width="808" ResizeMode="NoResize" Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

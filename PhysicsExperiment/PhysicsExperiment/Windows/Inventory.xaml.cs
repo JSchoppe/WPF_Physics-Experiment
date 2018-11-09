@@ -23,5 +23,10 @@ namespace PhysicsExperiment
         {
             InitializeComponent();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            WindowManager.CloseAll();
+        }
     }
 }

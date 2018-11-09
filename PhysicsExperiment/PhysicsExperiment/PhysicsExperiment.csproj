@@ -59,23 +59,18 @@
     <Compile Include="DataStructures\InventoryItem.cs" />
     <Compile Include="DataStructures\MapScreen.cs" />
     <Compile Include="DataStructures\SaveFile.cs" />
+    <Compile Include="StaticSystems\DesignParser.cs" />
     <Compile Include="Design\WorldMap.cs" />
-    <Compile Include="Windows\Controls.xaml.cs">
-      <DependentUpon>Controls.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="StaticSystems\Mapping.cs" />
     <Compile Include="ProgrammingUtilities.cs" />
-    <Compile Include="WindowManager.cs" />
+    <Compile Include="StaticSystems\WindowManager.cs" />
     <Compile Include="Windows\Level.xaml.cs">
       <DependentUpon>Level.xaml</DependentUpon>
     </Compile>
-    <Page Include="Windows\Controls.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="StaticSystems\World.cs" />
     <Page Include="Windows\Inventory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,7 +122,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TestRoom.bmp" />
+    <Resource Include="Resources\CollisionMaps\TestRoom.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TestArt.bmp" />
@@ -135,8 +130,12 @@
   <ItemGroup>
     <Resource Include="Resources\InventoryLocked.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\CollisionMaps\" />
+    <Resource Include="Resources\PlaceholderPlayer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\UndiscoveredScreen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

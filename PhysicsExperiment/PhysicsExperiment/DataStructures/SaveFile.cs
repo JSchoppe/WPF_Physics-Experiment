@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PhysicsExperiment.DataStructures
 {
-    class SaveFile
+    public class SaveFile
     {
-
+        //public bool[,] discovery
     }
 }

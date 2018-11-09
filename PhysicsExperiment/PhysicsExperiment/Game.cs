@@ -27,6 +27,7 @@ namespace PhysicsExperiment
 
         public static DirectoryInfo resourcesPath;
 
+        private static Player player1;
 
         private static DispatcherTimer tickTimer = new DispatcherTimer();
 
@@ -53,14 +54,20 @@ namespace PhysicsExperiment
             // Call OnTick whenever this timer ticks.
             tickTimer.Tick += OnTick;
 
-            // Start the timer.
-            tickTimer.Start();
-
             WindowManager.Start();
             WindowManager.AddWindow();
 
             // Close the start screen window.
             startScreen.Close();
+
+            DesignParser.ParseAll();
+
+            Collision.SetCollidersFromNormalizedSet(World.maps[0, 0].staticColliders);
+
+            player1 = new Player((Windows.Level)WindowManager.windowMatrix[4]);
+
+            // Start the timer.
+            tickTimer.Start();
         }
 
         private static void OnTick(object sender, EventArgs e)
@@ -68,6 +75,7 @@ namespace PhysicsExperiment
             // Calculate the deltaTime for this tick:
             deltaTime = (DateTime.Now - lastFrame).TotalSeconds;
             lastFrame = DateTime.Now;
+            player1.Update();
         }
 
 
