@@ -100,12 +100,36 @@ namespace PhysicsExperiment
 
             if (collision != null)
             {
-                return true;
+                // Calculate the magnitude of push required to seperate these colliders in each direction.
+                double rightPush = Abs(collision.rightEdge - this.leftEdge);
+                double leftPush = Abs(collision.leftEdge - this.rightEdge);
+                double upPush = Abs(collision.topEdge - this.bottomEdge);
+                double downPush = Abs(collision.bottomEdge - this.topEdge);
+
+                Direction willPushTo = ProgrammingUtilities.PolarizeVectorDirection(offset);
+
+                double[] pushVals = { rightPush, leftPush, upPush, downPush };
+
+                switch (ProgrammingUtilities.IndexOfSmallest(pushVals))
+                {
+                    // Push out to the right.
+                    case 0:
+                        return willPushTo == Direction.Right;
+
+                    // Push out to the left.
+                    case 1:
+                        return willPushTo == Direction.Left;
+
+                    // Push out to the top.
+                    case 2:
+                        return willPushTo == Direction.Up;
+
+                    // Push out to the bottom.
+                    case 3:
+                        return willPushTo == Direction.Down;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         /// <summary>Determines if two box colliders are overlapping</summary>

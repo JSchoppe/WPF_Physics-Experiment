@@ -49,18 +49,18 @@ namespace PhysicsExperiment
 
 
             // Set the tick timer to run at 60 hertz.
-            tickTimer.Interval = TimeSpan.FromSeconds(1 / 60.00);
+            tickTimer.Interval = TimeSpan.FromSeconds(1 / 90.00);
 
             // Call OnTick whenever this timer ticks.
             tickTimer.Tick += OnTick;
+
+            DesignParser.ParseAll();
 
             WindowManager.Start();
             WindowManager.AddWindow();
 
             // Close the start screen window.
             startScreen.Close();
-
-            DesignParser.ParseAll();
 
             Collision.SetCollidersFromNormalizedSet(World.maps[0, 0].staticColliders);
 

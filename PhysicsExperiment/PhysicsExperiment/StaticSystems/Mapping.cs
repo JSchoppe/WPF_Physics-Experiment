@@ -10,6 +10,11 @@ namespace PhysicsExperiment
 {
     public static class Mapping
     {
+        // Determines the area that colliders will be expanded past the screen boundaries.
+        // This prevents clipping out of bounds through walls.
+        private static int padding = 10;
+
+
         // Bitmap class.
         // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.bitmap?view=netframework-4.7.2
 
@@ -81,7 +86,39 @@ namespace PhysicsExperiment
                             }
                         }
 
-                        generatedColliders.Add(new BoxCollider(x, y, bottomRightX + 1, bottomRightY - 1));
+                        // Generate the boxcollider to add based on the unitary edges.
+                        BoxCollider toAdd = new BoxCollider(x, y, bottomRightX + 1, bottomRightY + 1);
+
+                        // Does this collider start at the left edge of the screen?
+                        if (x == 0)
+                        {
+                            // If so, add padding out to the left.
+                            toAdd.leftEdge -= padding;
+                        }
+
+                        // Does this collider end at the right edge of the screen?
+                        if (bottomRightX == collisionMap.Width - 1)
+                        {
+                            // If so, add padding out to the right.
+                            toAdd.rightEdge += padding;
+                        }
+
+                        // Does this collider start at the top edge of the screen?
+                        if (y == 0)
+                        {
+                            // If so, add padding out the top.
+                            toAdd.topEdge -= padding;
+                        }
+
+                        // Does this collider end at the bottom edge of the screen?
+                        if (bottomRightY == collisionMap.Height - 1)
+                        {
+                            // If so, add padding out the bottom.
+                            toAdd.bottomEdge += padding;
+                        }
+
+                        // Add the collider to the return list.
+                        generatedColliders.Add(toAdd);
 
                         // Now that the collider has been added, mark these tiles as complete.
                         // This ensures that they will be skipped over.

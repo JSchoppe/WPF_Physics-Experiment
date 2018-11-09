@@ -10,22 +10,6 @@ using System.Windows.Controls;
 
 namespace PhysicsExperiment
 {
-    //public class PlayerInputBindings
-    //{
-    //    public List<Key> action1 = new List<Key>()
-    //    {
-    //        Key.Space
-    //    };
-
-    //    public List<Key>
-
-    //}
-
-    //public class PlayerStats
-    //{
-
-    //}
-
 
     public class Player
     {
@@ -34,6 +18,7 @@ namespace PhysicsExperiment
         public double jump = 600;
 
         private bool takeoff = false;
+        private bool ceilingHit = false;
         private bool inAir = false;
 
         private BoxCollider hitbox;
@@ -69,11 +54,9 @@ namespace PhysicsExperiment
             Vector movement = new Vector(0, -.001);
 
 
-            bool floorBelow = false;
-            if (hitbox.ProjectionCast(new Vector(0, 0.4)))
-            {
-                floorBelow = true;
-            }
+            bool floorBelow = hitbox.ProjectionCast(new Vector(0, 0.1));
+
+            bool ceilingAbove = hitbox.ProjectionCast(new Vector(0, -0.5));
 
             if (inAir)
             {
@@ -87,7 +70,23 @@ namespace PhysicsExperiment
                     }
                     else
                     {
+                        ceilingHit = false;
                         inAir = false;
+                    }
+                }
+                else if (ceilingAbove)
+                {
+                    if (ceilingHit)
+                    {
+                        movement.Y += UpdateElevation();
+                    }
+                    else
+                    {
+                        initialY = hitbox.topEdge;
+                        initialAirVelocity = 0;
+                        airTime = 0;
+
+                        ceilingHit = true;
                     }
                 }
                 else
