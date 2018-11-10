@@ -29,7 +29,7 @@ namespace PhysicsExperiment
 
         private static Player player1;
 
-        private static DispatcherTimer tickTimer = new DispatcherTimer();
+        public static DispatcherTimer tickTimer = new DispatcherTimer();
 
         private static DateTime lastFrame;
 
@@ -57,12 +57,12 @@ namespace PhysicsExperiment
             DesignParser.ParseAll();
 
             WindowManager.Start();
-            WindowManager.AddWindow();
+            WindowManager.CreateWindows(1,1);
 
             // Close the start screen window.
             startScreen.Close();
 
-            Collision.SetCollidersFromNormalizedSet(World.maps[0, 0].staticColliders);
+            Collision.SetCollidersFromNormalizedSet(World.maps[1, 1].staticColliders);
 
             player1 = new Player((Windows.Level)WindowManager.windowMatrix[4]);
 

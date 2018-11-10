@@ -130,12 +130,25 @@
   <ItemGroup>
     <Resource Include="Resources\InventoryLocked.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\LeftRoom.png" />
+    <Resource Include="Resources\LeftTower.png" />
+    <Resource Include="Resources\OriginRoom.png" />
+    <Resource Include="Resources\TowerCrossing.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\PlaceholderPlayer.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\UndiscoveredScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CollisionMaps\OriginRoom.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CollisionMaps\LeftRoom.bmp" />
+    <Resource Include="Resources\CollisionMaps\LeftTower.bmp" />
+    <Resource Include="Resources\CollisionMaps\TowerCrossing.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Drawing;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace PhysicsExperiment
 {
@@ -12,6 +16,8 @@ namespace PhysicsExperiment
 
     public static class WindowManager
     {
+
+        public static List<PushOperation> currentPushes = new List<PushOperation>();
 
         public static int clientX;
         public static int clientY;
@@ -54,8 +60,6 @@ namespace PhysicsExperiment
             }
         }
 
-        private static bool once = true;
-
         public static void CloseAll()
         {
             foreach (Window window in windowMatrix)
@@ -67,8 +71,64 @@ namespace PhysicsExperiment
             }
         }
 
+        private static bool once = true;
 
-        public static void AddWindow()
+        public static void PushAll(Direction toPush)
+        {
+            if (currentPushes.Count > 0)
+            {
+                return;
+            }
+            switch (toPush)
+            {
+                case Direction.Left:
+                    foreach (Window window in windowMatrix)
+                    {
+                        currentPushes.Add(new PushOperation
+                        (
+                            window,
+                            (int)(- clientX - BorderAddedX), 0,
+                            0.2
+                        ));
+                    }
+                    break;
+                case Direction.Right:
+                    foreach (Window window in windowMatrix)
+                    {
+                        currentPushes.Add(new PushOperation
+                        (
+                            window,
+                            (int)(clientX + BorderAddedX), 0,
+                            0.2
+                        ));
+                    }
+                    break;
+                case Direction.Up:
+                    foreach (Window window in windowMatrix)
+                    {
+                        currentPushes.Add(new PushOperation
+                        (
+                            window,
+                            0, (int)(- clientY - BorderAddedY),
+                            0.2
+                        ));
+                    }
+                    break;
+                case Direction.Down:
+                    foreach (Window window in windowMatrix)
+                    {
+                        currentPushes.Add(new PushOperation
+                        (
+                            window,
+                            0, (int)(clientY + BorderAddedY),
+                            0.2
+                        ));
+                    }
+                    break;
+            }
+        }
+
+        public static void CreateWindows(byte centerX, byte centerY)
         {
             if (once)
             {
@@ -81,7 +141,31 @@ namespace PhysicsExperiment
                     }
                     else
                     {
-                        windowMatrix[i] = new Windows.Level();
+                        Windows.Level level = new Windows.Level();
+
+                        // Calculate the world position based on the windows position.
+                        int coordX = centerX + ((i % 3) - 1);
+                        int coordY = centerY + ((i / 3) - 1);
+
+                        // Is this world position within the defined world?
+                        if (ProgrammingUtilities.IndexInTwoDimensionalArray(coordX, coordY, World.maps))
+                        {
+                            BitmapImage bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.UriSource = World.maps[coordX, coordY].aestheticLayer;
+                            bitmap.EndInit();
+                            level.AestheticLayer.Source = bitmap;
+                        }
+                        else
+                        {
+                            BitmapImage bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.UriSource = new Uri(Game.resourcesPath + "/UndiscoveredScreen.png");
+                            bitmap.EndInit();
+                            level.AestheticLayer.Source = bitmap;
+                        }
+
+                        windowMatrix[i] = level;
                     }
                     windowMatrix[i].Width = clientX + BorderAddedX;
                     windowMatrix[i].Height = clientY + BorderAddedY;
@@ -93,6 +177,54 @@ namespace PhysicsExperiment
                 }
             }
             once = false;
+        }
+
+        public class PushOperation
+        {
+            DateTime pushStart;
+            Window pushedWindow;
+
+            double initialX;
+            double initialY;
+
+            double pushX;
+            double pushY;
+
+            double pushDuration;
+
+            public PushOperation(Window toPush, int pixelsX, int pixelsY, double timeToPush)
+            {
+                pushStart = DateTime.Now;
+                pushedWindow = toPush;
+                pushDuration = timeToPush;
+
+                initialX = toPush.Left;
+                initialY = toPush.Top;
+
+                pushX = pixelsX;
+                pushY = pixelsY;
+
+                Game.tickTimer.Tick += Update;
+            }
+
+            public void Update(object sender, EventArgs e)
+            {
+                double timeElapsed = (DateTime.Now - pushStart).TotalSeconds;
+                if (timeElapsed > pushDuration)
+                {
+                    pushedWindow.Left = initialX + pushX;
+                    pushedWindow.Top = initialY + pushY;
+
+                    currentPushes.Remove(this);
+
+                    Game.tickTimer.Tick -= Update;
+                }
+                else
+                {
+                    pushedWindow.Left = initialX + (timeElapsed / pushDuration) * pushX;
+                    pushedWindow.Top = initialY + (timeElapsed / pushDuration) * pushY;
+                }
+            }
         }
     }
 }

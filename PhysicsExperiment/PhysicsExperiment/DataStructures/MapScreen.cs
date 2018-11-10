@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
 using System.Windows;
+using System.Drawing;
 using System.IO;
 
 // Thanks to David Antognoli
@@ -24,7 +24,7 @@ namespace PhysicsExperiment.DataStructures
         {
             // This is used by the design parser to fill gaps the level maps array.
             // Designer does not have to specify these in the WorldMap.
-            aestheticLayer = new Uri("UndiscoveredScreen.png", UriKind.Relative);
+            aestheticLayer = new Uri(Game.resourcesPath.FullName + "/UndiscoveredScreen.png");
         }
 
         public MapScreen(string collisionMapName, string aestheticMapName, byte coordX, byte coordY)
@@ -40,6 +40,20 @@ namespace PhysicsExperiment.DataStructures
 #if DEBUG
                 // Show an error popup if in debug build.
                 MessageBox.Show("The requested collision map: " + collisionMapName + ".bmp does not exist in the collision maps folder!", "Unknown Asset Error");
+#endif
+            }
+
+            if (File.Exists(Game.resourcesPath.FullName + "/" + aestheticMapName + ".png"))
+            {
+                aestheticLayer = new Uri(Game.resourcesPath.FullName + "/" + aestheticMapName + ".png");
+            }
+            else
+            {
+                // Replace with default image.
+                aestheticLayer = new Uri(Game.resourcesPath.FullName + "/UndiscoveredScreen.png");
+#if DEBUG
+                // Show an error popup if in debug build.
+                MessageBox.Show("The requested aesthetic map: " + aestheticMapName + ".png does not exist in the resources folder!", "Unknown Asset Error");
 #endif
             }
 

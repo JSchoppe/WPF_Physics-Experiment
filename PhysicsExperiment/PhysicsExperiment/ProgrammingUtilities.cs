@@ -77,5 +77,20 @@ namespace PhysicsExperiment
                 }
             }
         }
+
+        public static bool IndexInTwoDimensionalArray<T>(int x, int y, T[,] array)
+        {
+            if (x < 0 || y < 0)
+            {
+                return false;
+            }
+
+            if (x >= array.GetLength(0) || y >= array.GetLength(1))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

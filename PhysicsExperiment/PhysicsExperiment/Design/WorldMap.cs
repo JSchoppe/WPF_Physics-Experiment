@@ -16,7 +16,10 @@ namespace PhysicsExperiment.Design
             maps = new List<MapScreen>()
             {
                 // Declare maps within this screen.
-                new MapScreen("TestRoom", "TestArt", 0, 0)
+                new MapScreen("LeftRoom", "LeftRoom", 0, 1),
+                new MapScreen("OriginRoom", "OriginRoom", 1, 1),
+                new MapScreen("LeftTower", "LeftTower", 0, 0),
+                new MapScreen("TowerCrossing", "TowerCrossing", 1, 0)
             };
         }
     }

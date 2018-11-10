@@ -53,6 +53,27 @@ namespace PhysicsExperiment
         {
             Vector movement = new Vector(0, -.001);
 
+            if (Keyboard.IsKeyDown(Key.Left))
+            {
+                WindowManager.PushAll(Direction.Left);
+            }
+
+            if (Keyboard.IsKeyDown(Key.Right))
+            {
+                WindowManager.PushAll(Direction.Right);
+            }
+
+            if (Keyboard.IsKeyDown(Key.Up))
+            {
+                WindowManager.PushAll(Direction.Up);
+            }
+
+            if (Keyboard.IsKeyDown(Key.Down))
+            {
+                WindowManager.PushAll(Direction.Down);
+            }
+
+
 
             bool floorBelow = hitbox.ProjectionCast(new Vector(0, 0.1));
 
@@ -135,6 +156,22 @@ namespace PhysicsExperiment
             {
                 BoxCollider.PushOut(ref hitbox, collision);
             }
+
+            if (hitbox.rightEdge < 0)
+            {
+                Windows.Level levelLeft = (Windows.Level)WindowManager.windowMatrix[3];
+
+                avatar = levelLeft.PlayerSprite;
+
+                avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+                avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
+
+                hitbox.leftEdge = WindowManager.UnitarySpaceToWindowSpace(23.99);
+                hitbox.rightEdge = WindowManager.UnitarySpaceToWindowSpace(24.99);
+
+                Collision.SetCollidersFromNormalizedSet(World.maps[0, 1].staticColliders);
+            }
+
 
             DrawPlayer();
 
