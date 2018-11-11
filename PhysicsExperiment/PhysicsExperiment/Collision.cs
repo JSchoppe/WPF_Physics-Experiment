@@ -106,11 +106,11 @@ namespace PhysicsExperiment
                 double upPush = Abs(collision.topEdge - this.bottomEdge);
                 double downPush = Abs(collision.bottomEdge - this.topEdge);
 
-                Direction willPushTo = ProgrammingUtilities.PolarizeVectorDirection(offset);
+                Direction willPushTo = CommonUtilities.PolarizeVectorDirection(offset);
 
                 double[] pushVals = { rightPush, leftPush, upPush, downPush };
 
-                switch (ProgrammingUtilities.IndexOfSmallest(pushVals))
+                switch (CommonUtilities.IndexOfSmallest(pushVals))
                 {
                     // Push out to the right.
                     case 0:
@@ -183,7 +183,7 @@ namespace PhysicsExperiment
 
             double[] pushVals = { rightPush, leftPush, upPush, downPush };
 
-            switch (ProgrammingUtilities.IndexOfSmallest(pushVals))
+            switch (CommonUtilities.IndexOfSmallest(pushVals))
             {
                 // Push out to the right.
                 case 0:

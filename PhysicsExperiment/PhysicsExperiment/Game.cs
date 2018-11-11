@@ -64,7 +64,7 @@ namespace PhysicsExperiment
 
             Collision.SetCollidersFromNormalizedSet(World.maps[1, 1].staticColliders);
 
-            player1 = new Player((Windows.Level)WindowManager.windowMatrix[4]);
+            player1 = new Player((Level)WindowManager.windowMatrix[4]);
 
             // Start the timer.
             tickTimer.Start();

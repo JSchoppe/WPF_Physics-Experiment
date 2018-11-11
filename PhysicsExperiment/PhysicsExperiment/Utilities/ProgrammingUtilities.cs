@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PhysicsExperiment
 {
-    public static class ProgrammingUtilities
+    public static class CommonUtilities
     {
         public static int IndexOfSmallest(double[] numbers)
         {

@@ -141,14 +141,14 @@ namespace PhysicsExperiment
                     }
                     else
                     {
-                        Windows.Level level = new Windows.Level();
+                        Level level = new Level();
 
                         // Calculate the world position based on the windows position.
                         int coordX = centerX + ((i % 3) - 1);
                         int coordY = centerY + ((i / 3) - 1);
 
                         // Is this world position within the defined world?
-                        if (ProgrammingUtilities.IndexInTwoDimensionalArray(coordX, coordY, World.maps))
+                        if (CommonUtilities.IndexInTwoDimensionalArray(coordX, coordY, World.maps))
                         {
                             BitmapImage bitmap = new BitmapImage();
                             bitmap.BeginInit();

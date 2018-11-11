@@ -65,7 +65,7 @@
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="StaticSystems\Mapping.cs" />
-    <Compile Include="ProgrammingUtilities.cs" />
+    <Compile Include="Utilities\ProgrammingUtilities.cs" />
     <Compile Include="StaticSystems\WindowManager.cs" />
     <Compile Include="Windows\Level.xaml.cs">
       <DependentUpon>Level.xaml</DependentUpon>
@@ -122,25 +122,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\CollisionMaps\TestRoom.bmp" />
+    <Resource Include="Resources\UserInterface\InventoryLocked.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TestArt.bmp" />
+    <Resource Include="Resources\AestheticMaps\LeftRoom.png" />
+    <Resource Include="Resources\AestheticMaps\LeftTower.png" />
+    <Resource Include="Resources\AestheticMaps\OriginRoom.png" />
+    <Resource Include="Resources\AestheticMaps\TowerCrossing.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\InventoryLocked.png" />
+    <Resource Include="Resources\Interactables\PlaceholderPlayer.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\LeftRoom.png" />
-    <Resource Include="Resources\LeftTower.png" />
-    <Resource Include="Resources\OriginRoom.png" />
-    <Resource Include="Resources\TowerCrossing.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PlaceholderPlayer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\UndiscoveredScreen.png" />
+    <Resource Include="Resources\AestheticMaps\UndiscoveredScreen.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\CollisionMaps\OriginRoom.bmp" />
@@ -150,5 +144,6 @@
     <Resource Include="Resources\CollisionMaps\LeftTower.bmp" />
     <Resource Include="Resources\CollisionMaps\TowerCrossing.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

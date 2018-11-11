@@ -17,8 +17,10 @@ namespace PhysicsExperiment
             ParseMaps();
         }
 
+        // Parses all of the current maps in Design>WorldMap.
         private static void ParseMaps()
         {
+            // Fetch the default world map.
             WorldMap currentWorld = new WorldMap();
 
             // Declare vars to track the bounding scale of the world.
@@ -28,11 +30,13 @@ namespace PhysicsExperiment
             // Determine the scale of the world by searching for the highest coordinates.
             foreach(MapScreen map in currentWorld.maps)
             {
+                // Does this screen push the x boundary?
                 if (map.coordinateX > mapScaleX)
                 {
                     mapScaleX = map.coordinateX;
                 }
 
+                // Does this screen push the y boundary?
                 if (map.coordinateY > mapScaleY)
                 {
                     mapScaleY = map.coordinateY;

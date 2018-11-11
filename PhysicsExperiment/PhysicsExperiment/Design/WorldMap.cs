@@ -1,9 +1,6 @@
-﻿using PhysicsExperiment.DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
+using PhysicsExperiment.DataStructures;
 
 namespace PhysicsExperiment.Design
 {
@@ -15,7 +12,7 @@ namespace PhysicsExperiment.Design
         {
             maps = new List<MapScreen>()
             {
-                // Declare maps within this screen.
+                // Declare maps within this world.
                 new MapScreen("LeftRoom", "LeftRoom", 0, 1),
                 new MapScreen("OriginRoom", "OriginRoom", 1, 1),
                 new MapScreen("LeftTower", "LeftTower", 0, 0),

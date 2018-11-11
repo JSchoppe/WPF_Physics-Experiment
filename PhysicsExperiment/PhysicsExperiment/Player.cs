@@ -33,7 +33,7 @@ namespace PhysicsExperiment
         private double initialAirVelocity;
         private double airTime;
 
-        public Player(Windows.Level inWindow)
+        public Player(Level inWindow)
         {
 
             avatar = inWindow.PlayerSprite;
@@ -159,7 +159,7 @@ namespace PhysicsExperiment
 
             if (hitbox.rightEdge < 0)
             {
-                Windows.Level levelLeft = (Windows.Level)WindowManager.windowMatrix[3];
+                Level levelLeft = (Level)WindowManager.windowMatrix[3];
 
                 avatar = levelLeft.PlayerSprite;
 
