@@ -160,7 +160,7 @@ namespace PhysicsExperiment
                         {
                             BitmapImage bitmap = new BitmapImage();
                             bitmap.BeginInit();
-                            bitmap.UriSource = new Uri(Game.resourcesPath + "/UndiscoveredScreen.png");
+                            bitmap.UriSource = new Uri(Game.resourcesPath + "/AestheticMaps/UndiscoveredScreen.png");
                             bitmap.EndInit();
                             level.AestheticLayer.Source = bitmap;
                         }

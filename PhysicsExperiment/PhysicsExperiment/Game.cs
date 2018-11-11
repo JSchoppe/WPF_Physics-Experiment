@@ -12,24 +12,20 @@ using System.Windows;
 
 namespace PhysicsExperiment
 {
-    public enum Direction
-    {
-        Up, Down, Left, Right
-    }
-
+    /// <summary>Contains the fundamental game rules and methods</summary>
     public static class Game
     {
-        // The current delta time of the last tick.
-        public static double deltaTime;
+        /// <summary>Time passed this tick</summary>
+        public static double deltaTime { get; private set; }
 
-        // It is currently assumed that gravity is down.
-        public static readonly double gravity = 1200;
+        /// <summary>The current gravity magnitude</summary>
+        public static double gravity = 1200;
 
         public static DirectoryInfo resourcesPath;
 
-        private static Player player1;
-
         public static DispatcherTimer tickTimer = new DispatcherTimer();
+
+        private static Player player1;
 
         private static DateTime lastFrame;
 

@@ -7,7 +7,7 @@
         Title="Level" Height="431" Width="808" Closed="Window_Closed">
     <Grid>
         <Image x:Name="AestheticLayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/AestheticMaps/OriginRoom.png"/>
-        <Image x:Name="PlayerSprite" HorizontalAlignment="Left" Height="100" Margin="-135,-109,0,0" VerticalAlignment="Top" Width="50" Source="/PhysicsExperiment;component/Resources/Characters/PlaceholderPlayer.png" Stretch="Fill"/>
+        <Image x:Name="PlayerSprite" HorizontalAlignment="Left" Height="100" Margin="-135,-109,0,0" VerticalAlignment="Top" Width="50" Source="/PhysicsExperiment;component/Resources/Interactables/PlaceholderPlayer.png" Stretch="Fill"/>
 
     </Grid>
 </Window>
