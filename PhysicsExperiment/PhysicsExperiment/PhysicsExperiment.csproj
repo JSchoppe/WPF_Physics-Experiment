@@ -145,6 +145,25 @@
     <Resource Include="Resources\CollisionMaps\LeftTower.bmp" />
     <Resource Include="Resources\CollisionMaps\TowerCrossing.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\CollisionMaps\Dungeon.bmp" />
+    <Resource Include="Resources\AestheticMaps\Dungeon.png" />
+    <Resource Include="Resources\CollisionMaps\DungeonPits.bmp" />
+    <Resource Include="Resources\AestheticMaps\DungeonPits.png" />
+    <Resource Include="Resources\CollisionMaps\IcyDungeon.bmp" />
+    <Resource Include="Resources\AestheticMaps\IcyDungeon.png" />
+    <Resource Include="Resources\CollisionMaps\RightTower.bmp" />
+    <Resource Include="Resources\AestheticMaps\RightTower.png" />
+    <Resource Include="Resources\CollisionMaps\ThroneRoom.bmp" />
+    <Resource Include="Resources\AestheticMaps\ThroneRoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Face1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Hair1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Pants1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Shirt1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Shoes1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Skin1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

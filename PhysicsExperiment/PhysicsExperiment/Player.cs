@@ -33,9 +33,14 @@ namespace PhysicsExperiment
         private double initialAirVelocity;
         private double airTime;
 
+        private Window currentWindow;
+
+        private uint currentX = 1;
+        private uint currentY = 1;
+
         public Player(Level inWindow)
         {
-
+            currentWindow = inWindow;
             avatar = inWindow.PlayerSprite;
 
             hitbox = new BoxCollider(
@@ -51,7 +56,7 @@ namespace PhysicsExperiment
 
         public void Update()
         {
-            Vector movement = new Vector(0, -.001);
+            Vector movement = new Vector(0, -.01);
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
@@ -159,22 +164,98 @@ namespace PhysicsExperiment
 
             if (hitbox.rightEdge < 0)
             {
-                Level levelLeft = (Level)WindowManager.windowMatrix[3];
+                Level levelLeft = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Left);
+                currentWindow = levelLeft;
 
-                avatar = levelLeft.PlayerSprite;
+                if (levelLeft != null)
+                {
+                    avatar.Width = 0;
+                    avatar.Height = 0;
+                    avatar = levelLeft.PlayerSprite;
 
-                avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
-                avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
+                    avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+                    avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
 
-                hitbox.leftEdge = WindowManager.UnitarySpaceToWindowSpace(23.99);
-                hitbox.rightEdge = WindowManager.UnitarySpaceToWindowSpace(24.99);
+                    hitbox.leftEdge += WindowManager.clientX;
+                    hitbox.rightEdge += WindowManager.clientX;
 
-                Collision.SetCollidersFromNormalizedSet(World.maps[0, 1].staticColliders);
+                    currentX--;
+
+                    Collision.SetCollidersFromNormalizedSet(World.maps[currentX, currentY].staticColliders);
+                }
             }
 
+            if (hitbox.leftEdge > WindowManager.clientX)
+            {
+                Level levelRight = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Right);
+                currentWindow = levelRight;
 
+                if (levelRight != null)
+                {
+                    avatar.Width = 0;
+                    avatar.Height = 0;
+                    avatar = levelRight.PlayerSprite;
+
+                    avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+                    avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
+
+                    hitbox.leftEdge -= WindowManager.clientX;
+                    hitbox.rightEdge -= WindowManager.clientX;
+
+                    currentX++;
+
+                    Collision.SetCollidersFromNormalizedSet(World.maps[currentX, currentY].staticColliders);
+                }
+            }
+
+            if (hitbox.topEdge > WindowManager.clientY)
+            {
+                Level levelDown = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Down);
+                currentWindow = levelDown;
+
+                if (levelDown != null)
+                {
+                    avatar.Width = 0;
+                    avatar.Height = 0;
+                    avatar = levelDown.PlayerSprite;
+
+                    avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+                    avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
+
+                    hitbox.topEdge -= WindowManager.clientY;
+                    hitbox.bottomEdge -= WindowManager.clientY;
+                    initialY -= WindowManager.clientY;
+
+                    currentY++;
+
+                    Collision.SetCollidersFromNormalizedSet(World.maps[currentX, currentY].staticColliders);
+                }
+            }
+
+            if (hitbox.bottomEdge < 0)
+            {
+                Level levelUp = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Up);
+                currentWindow = levelUp;
+
+                if (levelUp != null)
+                {
+                    avatar.Width = 0;
+                    avatar.Height = 0;
+                    avatar = levelUp.PlayerSprite;
+
+                    avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
+                    avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
+
+                    hitbox.topEdge += WindowManager.clientY;
+                    hitbox.bottomEdge += WindowManager.clientY;
+                    initialY += WindowManager.clientY;
+
+                    currentY--;
+
+                    Collision.SetCollidersFromNormalizedSet(World.maps[currentX, currentY].staticColliders);
+                }
+            }
             DrawPlayer();
-
         }
 
 

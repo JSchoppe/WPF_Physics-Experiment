@@ -11,19 +11,63 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayButton_Click" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayButton_Click" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <Button Content="Erase File" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch"/>
+        <Button Content="Settings" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch"/>
+        <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Stretch" Click="QuitButton_Click"/>
+        <TabControl Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Stretch" TabStripPlacement="Left" Grid.ColumnSpan="2">
+            <TabItem Header="Hair">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Face">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Skin">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Shirt">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Pants">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Shoes">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch"/>
+        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch"/>
+        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch"/>
+        <Image x:Name="SkinLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Skin1.png"/>
+        <Image x:Name="ShoeLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Shoes1.png"/>
+        <Image x:Name="PantsLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Pants1.png"/>
+        <Image x:Name="ShirtLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Shirt1.png"/>
+        <Image x:Name="FaceLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Face1.png"/>
+        <Image x:Name="HairLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Hair1.png"/>
     </Grid>
 </Window>

@@ -53,9 +53,9 @@ namespace PhysicsExperiment
             }
 
             // Check for empty coordinates in the world and fill them with empty screens.
-            for (int x = 0; x < mapScaleX; x++)
+            for (int x = 0; x < mapScaleX + 1; x++)
             {
-                for (int y = 0; y < mapScaleY; y++)
+                for (int y = 0; y < mapScaleY + 1; y++)
                 {
                     if (World.maps[x, y] == null)
                     {

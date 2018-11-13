@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using System.Drawing;
 
 using static System.Windows.SystemParameters;
+using System.IO;
 
 namespace PhysicsExperiment
 {
@@ -60,15 +61,31 @@ namespace PhysicsExperiment
                 StartupWindow.Height = maxClientY + WindowManager.BorderAddedY;
             }
 
+            // Get the directory that Game.cs is in.
+            Game.resourcesPath = new DirectoryInfo(".");
+
+            // Cycle up through the files until the parent is the solution title.
+            while (Game.resourcesPath.Parent.Name != "PhysicsExperiment")
+            {
+                Game.resourcesPath = Game.resourcesPath.Parent;
+            }
+
+            // Get the resources folder.
+            Game.resourcesPath = new DirectoryInfo(Game.resourcesPath.Parent.FullName + "/Resources");
+
+            // Parse everything in the design folder into the game.
+            DesignParser.ParseAll();
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             // Start the game.
-            //WindowManager.BorderAddedX = Width - MainGrid.ActualWidth;
-            //WindowManager.BorderAddedY = Height - MainGrid.ActualHeight;
-
             Game.Start(this);
+        }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

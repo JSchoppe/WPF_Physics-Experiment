@@ -128,6 +128,67 @@ namespace PhysicsExperiment
             }
         }
 
+        public static Window GetWindowDirection(Window current, Direction direction)
+        {
+            int currentIndex = -1;
+
+            for (int i = 0; i < windowMatrix.Length; i++)
+            {
+                if (windowMatrix[i] == current)
+                {
+                    currentIndex = i;
+                }
+            }
+
+            if (currentIndex == -1)
+            {
+                return null;
+            }
+
+            switch (direction)
+            {
+                case Direction.Left:
+                    if (currentIndex % 3 == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return windowMatrix[currentIndex - 1];
+                    }
+
+                case Direction.Up:
+                    if (currentIndex < 3)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return windowMatrix[currentIndex - 3];
+                    }
+
+                case Direction.Right:
+                    if (currentIndex % 3 == 2)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return windowMatrix[currentIndex + 1];
+                    }
+                case Direction.Down:
+                    if (currentIndex > 5)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return windowMatrix[currentIndex + 3];
+                    }
+            }
+            return null;
+        }
+
         public static void CreateWindows(byte centerX, byte centerY)
         {
             if (once)

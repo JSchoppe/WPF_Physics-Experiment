@@ -15,6 +15,7 @@ namespace PhysicsExperiment
     /// <summary>Contains the fundamental game rules and methods</summary>
     public static class Game
     {
+        
         /// <summary>Time passed this tick</summary>
         public static double deltaTime { get; private set; }
 
@@ -31,17 +32,6 @@ namespace PhysicsExperiment
 
         public static void Start (Window startScreen)
         {
-            // Get the directory that Game.cs is in.
-            resourcesPath = new DirectoryInfo(".");
-
-            // Cycle up through the files until the parent is the solution title.
-            while (resourcesPath.Parent.Name != "PhysicsExperiment")
-            {
-                resourcesPath = resourcesPath.Parent;
-            }
-
-            // Get the resources folder.
-            resourcesPath = new DirectoryInfo(resourcesPath.Parent.FullName + "/Resources");
 
 
             // Set the tick timer to run at 60 hertz.
@@ -49,8 +39,6 @@ namespace PhysicsExperiment
 
             // Call OnTick whenever this timer ticks.
             tickTimer.Tick += OnTick;
-
-            DesignParser.ParseAll();
 
             WindowManager.Start();
             WindowManager.CreateWindows(1,1);

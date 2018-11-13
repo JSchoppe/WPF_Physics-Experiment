@@ -27,14 +27,16 @@ namespace PhysicsExperiment
 
         public static void SetCollidersFromNormalizedSet(BoxCollider[] colliders)
         {
-            sceneColliders = colliders.ToList();
+            sceneColliders.Clear();
 
-            foreach (BoxCollider collider in sceneColliders)
+            foreach (BoxCollider collider in colliders)
             {
-                collider.leftEdge = WindowManager.UnitarySpaceToWindowSpace(collider.leftEdge);
-                collider.rightEdge = WindowManager.UnitarySpaceToWindowSpace(collider.rightEdge);
-                collider.topEdge = WindowManager.UnitarySpaceToWindowSpace(collider.topEdge);
-                collider.bottomEdge = WindowManager.UnitarySpaceToWindowSpace(collider.bottomEdge);
+                sceneColliders.Add(new BoxCollider(
+                    WindowManager.UnitarySpaceToWindowSpace(collider.leftEdge),
+                    WindowManager.UnitarySpaceToWindowSpace(collider.topEdge),
+                    WindowManager.UnitarySpaceToWindowSpace(collider.rightEdge),
+                    WindowManager.UnitarySpaceToWindowSpace(collider.bottomEdge)
+                ));
             }
         }
 
