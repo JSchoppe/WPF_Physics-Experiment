@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserInput.cs" />
     <Compile Include="Utilities\CodeEnums.cs" />
     <Compile Include="DataStructures\InventoryItem.cs" />
     <Compile Include="DataStructures\MapScreen.cs" />
@@ -84,7 +85,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Collision.cs" />
+    <Compile Include="StaticSystems\Collision.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

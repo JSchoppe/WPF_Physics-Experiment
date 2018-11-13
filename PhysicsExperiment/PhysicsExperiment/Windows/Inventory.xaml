@@ -33,8 +33,32 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/InventoryLocked.png"/>
-                    <Image HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/InventoryLocked.png"/>
+                    <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/UserInterface/InventoryLocked.png"/>
+                    <Image HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Source="/PhysicsExperiment;component/Resources/UserInterface/InventoryLocked.png"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Debug - Live Watch">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Watches" VerticalAlignment="Stretch" FontSize="24"/>
+                    <TextBlock x:Name="WatchName1" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" Text="Null" VerticalAlignment="Stretch" FontSize="18" TextAlignment="Right"/>
+                    <TextBlock Grid.Column="2" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Values" VerticalAlignment="Stretch" FontSize="24"/>
+                    <TextBlock x:Name="WatchValue1" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" Text="Null" VerticalAlignment="Stretch" TextAlignment="Right" FontSize="18"/>
                 </Grid>
             </TabItem>
         </TabControl>

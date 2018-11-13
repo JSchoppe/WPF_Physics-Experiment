@@ -28,5 +28,11 @@ namespace PhysicsExperiment
         {
             WindowManager.CloseAll();
         }
+
+        public void LiveWatchUpdate(string watch, string value)
+        {
+            WatchName1.Text = watch;
+            WatchValue1.Text = value;
+        }
     }
 }

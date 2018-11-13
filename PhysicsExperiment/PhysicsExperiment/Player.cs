@@ -35,8 +35,8 @@ namespace PhysicsExperiment
 
         private Window currentWindow;
 
-        private uint currentX = 1;
-        private uint currentY = 1;
+        private byte currentX = 1;
+        private byte currentY = 1;
 
         public Player(Level inWindow)
         {
@@ -81,6 +81,16 @@ namespace PhysicsExperiment
 
 
             bool floorBelow = hitbox.ProjectionCast(new Vector(0, 0.1));
+
+            Inventory invent= (Inventory)WindowManager.windowMatrix[0];
+            if (floorBelow)
+            {
+                invent.LiveWatchUpdate("Grounded", "true");
+            }
+            else
+            {
+                invent.LiveWatchUpdate("Grounded", "false");
+            }
 
             bool ceilingAbove = hitbox.ProjectionCast(new Vector(0, -0.5));
 
