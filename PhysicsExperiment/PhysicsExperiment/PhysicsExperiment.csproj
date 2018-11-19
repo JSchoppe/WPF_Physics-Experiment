@@ -56,27 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserInput.cs" />
-    <Compile Include="Utilities\CodeEnums.cs" />
-    <Compile Include="DataStructures\InventoryItem.cs" />
-    <Compile Include="DataStructures\MapScreen.cs" />
-    <Compile Include="DataStructures\SaveFile.cs" />
-    <Compile Include="StaticSystems\DesignParser.cs" />
-    <Compile Include="Design\WorldMap.cs" />
-    <Compile Include="Windows\Inventory.xaml.cs">
-      <DependentUpon>Inventory.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StaticSystems\Mapping.cs" />
-    <Compile Include="Utilities\CommonUtilities.cs" />
-    <Compile Include="StaticSystems\WindowManager.cs" />
-    <Compile Include="Windows\Level.xaml.cs">
-      <DependentUpon>Level.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StaticSystems\World.cs" />
-    <Page Include="Windows\Inventory.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,19 +64,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StaticSystems\Collision.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\Level.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,41 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\UserInterface\InventoryLocked.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\AestheticMaps\LeftRoom.png" />
-    <Resource Include="Resources\AestheticMaps\LeftTower.png" />
-    <Resource Include="Resources\AestheticMaps\OriginRoom.png" />
-    <Resource Include="Resources\AestheticMaps\TowerCrossing.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Interactables\PlaceholderPlayer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\AestheticMaps\UndiscoveredScreen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\CollisionMaps\OriginRoom.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\CollisionMaps\LeftRoom.bmp" />
-    <Resource Include="Resources\CollisionMaps\LeftTower.bmp" />
-    <Resource Include="Resources\CollisionMaps\TowerCrossing.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\CollisionMaps\Dungeon.bmp" />
-    <Resource Include="Resources\AestheticMaps\Dungeon.png" />
-    <Resource Include="Resources\CollisionMaps\DungeonPits.bmp" />
-    <Resource Include="Resources\AestheticMaps\DungeonPits.png" />
-    <Resource Include="Resources\CollisionMaps\IcyDungeon.bmp" />
-    <Resource Include="Resources\AestheticMaps\IcyDungeon.png" />
-    <Resource Include="Resources\CollisionMaps\RightTower.bmp" />
-    <Resource Include="Resources\AestheticMaps\RightTower.png" />
-    <Resource Include="Resources\CollisionMaps\ThroneRoom.bmp" />
-    <Resource Include="Resources\AestheticMaps\ThroneRoom.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\PlayerSpriteComponents\Face1.png" />

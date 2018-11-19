@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicsExperiment", "PhysicsExperiment\PhysicsExperiment.csproj", "{7718F79B-AD55-4CBE-AE48-F1EA1F94F5CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignParser", "DesignParser\DesignParser.csproj", "{0B4F0617-5502-4364-95C1-25CA37A9D558}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{7718F79B-AD55-4CBE-AE48-F1EA1F94F5CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7718F79B-AD55-4CBE-AE48-F1EA1F94F5CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7718F79B-AD55-4CBE-AE48-F1EA1F94F5CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B4F0617-5502-4364-95C1-25CA37A9D558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B4F0617-5502-4364-95C1-25CA37A9D558}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B4F0617-5502-4364-95C1-25CA37A9D558}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B4F0617-5502-4364-95C1-25CA37A9D558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

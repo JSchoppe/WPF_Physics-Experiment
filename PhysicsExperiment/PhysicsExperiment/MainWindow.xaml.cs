@@ -32,8 +32,8 @@ namespace PhysicsExperiment
         // This will run immediately after the window controls have initialized.
         private void StartupWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowManager.BorderAddedX = Width - MainGrid.ActualWidth;
-            WindowManager.BorderAddedY = Height - MainGrid.ActualHeight;
+            double BorderAddedX = Width - MainGrid.ActualWidth;
+            double BorderAddedY = Height - MainGrid.ActualHeight;
 
             // Retrieve two-thirds of the work area resolution
             int screenWidth = (int)(2.0/3.0 * WorkArea.Width);
@@ -44,43 +44,39 @@ namespace PhysicsExperiment
             screenHeight -= screenHeight % 2;
 
             // Calculate the maximum client areas.
-            int maxClientX = (int)(screenWidth - WindowManager.BorderAddedX);
-            int maxClientY = (int)(screenHeight - WindowManager.BorderAddedY);
+            int maxClientX = (int)(screenWidth - BorderAddedX);
+            int maxClientY = (int)(screenHeight - BorderAddedY);
 
             // Which client maximum is more restrictive? (Assuming that there is a x = 2y relationship).
             if (2 * maxClientY > maxClientX)
             {
                 // The maximum X is more restrictive.
-                StartupWindow.Width = maxClientX + WindowManager.BorderAddedX;
-                StartupWindow.Height = (maxClientX / 2) + WindowManager.BorderAddedY;
+                StartupWindow.Width = maxClientX + BorderAddedX;
+                StartupWindow.Height = (maxClientX / 2) + BorderAddedY;
             }
             else
             {
                 // The maximum Y is more restrictive.
-                StartupWindow.Width = (maxClientY * 2) + WindowManager.BorderAddedX;
-                StartupWindow.Height = maxClientY + WindowManager.BorderAddedY;
+                StartupWindow.Width = (maxClientY * 2) + BorderAddedX;
+                StartupWindow.Height = maxClientY + BorderAddedY;
             }
 
             // Get the directory that Game.cs is in.
-            Game.resourcesPath = new DirectoryInfo(".");
+            DirectoryInfo resourcesPath = new DirectoryInfo(".");
 
             // Cycle up through the files until the parent is the solution title.
-            while (Game.resourcesPath.Parent.Name != "PhysicsExperiment")
+            while (resourcesPath.Parent.Name != "PhysicsExperiment")
             {
-                Game.resourcesPath = Game.resourcesPath.Parent;
+                resourcesPath = resourcesPath.Parent;
             }
 
             // Get the resources folder.
-            Game.resourcesPath = new DirectoryInfo(Game.resourcesPath.Parent.FullName + "/Resources");
-
-            // Parse everything in the design folder into the game.
-            DesignParser.ParseAll();
+            resourcesPath = new DirectoryInfo(resourcesPath.Parent.FullName + "/Resources");
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            // Start the game.
-            Game.Start(this);
+
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
