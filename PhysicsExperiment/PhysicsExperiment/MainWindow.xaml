@@ -63,11 +63,9 @@
         <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch"/>
         <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch"/>
         <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch"/>
-        <Image x:Name="SkinLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Skin1.png"/>
-        <Image x:Name="ShoeLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Shoes1.png"/>
-        <Image x:Name="PantsLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Pants1.png"/>
-        <Image x:Name="ShirtLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Shirt1.png"/>
-        <Image x:Name="FaceLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Face1.png"/>
-        <Image x:Name="HairLayer" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Hair1.png"/>
+        <Image x:Name="Avatar" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120" Source="Resources/PlayerSpriteComponents/Skin1.png"/>
+        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/HueSymbol.png"/>
+        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/SatSymbol.png"/>
+        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/ValSymbol.png"/>
     </Grid>
 </Window>

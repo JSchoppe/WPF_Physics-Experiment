@@ -23,6 +23,9 @@ namespace PhysicsExperiment
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window
     {
+        // The path of the resources directory.
+        DirectoryInfo resourcesPath;
+
         // Construction of the initial window.
         public MainWindow()
         {
@@ -62,7 +65,7 @@ namespace PhysicsExperiment
             }
 
             // Get the directory that Game.cs is in.
-            DirectoryInfo resourcesPath = new DirectoryInfo(".");
+            resourcesPath = new DirectoryInfo(".");
 
             // Cycle up through the files until the parent is the solution title.
             while (resourcesPath.Parent.Name != "PhysicsExperiment")
@@ -76,7 +79,15 @@ namespace PhysicsExperiment
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            Bitmap map1 = new Bitmap(resourcesPath.FullName + "/PlayerSpriteComponents/Skin1.png");
+            Bitmap map2 = new Bitmap(resourcesPath.FullName + "/PlayerSpriteComponents/Pants1.png");
 
+            Bitmap map3 = ImageTools.MergeDown(new Bitmap[] { map1, map2 });
+            map3 = ImageTools.Stroke(map3, System.Drawing.Color.Black);
+            map3 = ImageTools.Stroke(map3, System.Drawing.Color.Blue);
+            map3 = ImageTools.Stroke(map3, System.Drawing.Color.Green);
+
+            Avatar.Source = ImageTools.BitmapToImageSource(map3);
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
