@@ -26,71 +26,66 @@ namespace PhysicsExperiment
                 return;
             }
 
-            // Is this a vertical sweep? (vertical component only)
-            if (deltaPosition.X == 0)
-            {
-                // Is this vertical sweep in the downward direction? [Ydown]
-                if (deltaPosition.Y > 0)
-                {
-                    // Cast a line down from the bottom left edge.
+            Vector shortestCast = deltaPosition;
+            double shortestDistance = deltaPosition.Length;
 
-                    // Cast a line down from the bottom right edge.
+            //if (SweepLine(new Vector(to)))
 
-                }
-                else
-                {
-                    // Cast a line up from the top left edge.
+            //// Is this a vertical sweep? (vertical component only)
+            //if (deltaPosition.X == 0)
+            //{
+            //    // Is this vertical sweep in the downward direction? [Ydown]
+            //    if (deltaPosition.Y > 0)
+            //    {
+            //        // Cast a line down from the bottom left edge.
 
-                    // Cast a line up from the top right edge.
-                }
-            }
+            //        // Cast a line down from the bottom right edge.
+
+            //    }
+            //    else
+            //    {
+            //        // Cast a line up from the top left edge.
+
+            //        // Cast a line up from the top right edge.
+            //    }
+            //}
+            //else if (deltaPosition.Y == 0)
+            //{
+            //    // Is this horizontal sweep in the rightward direction?
+            //    if (deltaPosition.X > 0)
+            //    {
+            //        // Cast a line right from the top right edge.
+
+            //        // Cast a line right from the bottom right edge.
+
+            //    }
+            //    else
+            //    {
+            //        // Cast a line left from the top left edge.
+
+            //        // Cast a line left from the bottom left edge.
+            //    }
+            //}
         }
 
-        /// <summary>Sweeps a line over the scene colliders</summary>
-        /// <param name="start">The start of the line(collider unit space)</param>
-        /// <param name="direction">The direction and magnitude of the line(collider unit space)</param>
-        /// <returns>Returns the Vector swept to, either a hit or the endpoint</returns>
-        private static Vector SweepLine(Vector start, Vector direction)
-        {
-            // Declare a vector to store the closest hit.
-            // As hits are found they will be checked against this hit.
-            // If they are closer they will overtake the closest hit.
-            // Returned by default is the endpoint of the line.
-            Vector closestHit = direction;
-            double closestMagnitude = direction.Length;
-
-            // Does this line need to check for horizontal edges?
-            if (direction.Y != 0)
-            {
-                // Check for top edges or bottom edges?
-                if (direction.Y > 0)
-                {
-                    // Check all top edges of current scene colliders.
-                    foreach (BoxCollider collider in sceneColliders)
-                    {
-                        // Check to see if this top edge is within the
-                        // vertical span of the drawn line.
-                        if (collider.topEdge > start.Y && collider.topEdge < start.Y + direction.Y)
-                        {
-                            // Calculate where the intercept is horizontally along the top edge.
-                            double xIntercept = (collider.topEdge - start.Y) / (direction.Y - start.Y) * direction.X + start.X;
-
-                            // Is the intercept between the left and right edge of the collider?
-                            if (xIntercept > collider.leftEdge && xIntercept < collider.rightEdge)
-                            {
-                                // This is a sweep hit.
-
-                                //hits.Add(new Vector(xIntercept - start.X, collider.topEdge - start.Y));
-                            }
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
-        }
+        /// <summary></summary>
+        /// <param name="sweepTop">Top vertex of the line</param>
+        /// <param name="sweepBottom">Bottom vertex of the line</param>
+        /// <param name="againstTop">Top vertex to sweep against</param>
+        /// <param name="againstBottom">Bottom vertex to sweep against</param>
+        /// <param name="travel">The vector to sweep along</param>
+        /// <returns>True if the sweep hits the against line</returns>
+        //private static bool VerticalLineSweep(Vector sweepTop, double sweepBottom, Vector againstTop, Vector againstBottom, Vector travel)
+        //{
+        //    double distanceAlong = (againstTop.X - sweepTop.X) / (travel.X = sweepTop.X);
+        //    if (distanceAlong < 0 || distanceAlong > 1)
+        //    {
+        //        return false;
+        //    }
+        //    double alignedTop = sweepTop.Y + distanceAlong * travel.Y;
+        //    double alignedBottom = alignedTop + sweepBottom;
+        //    if (againstTop )
+        //}
 
 
 
@@ -109,17 +104,7 @@ namespace PhysicsExperiment
 
         public static void SetCollidersFromNormalizedSet(BoxCollider[] colliders)
         {
-            sceneColliders.Clear();
-
-            foreach (BoxCollider collider in colliders)
-            {
-                sceneColliders.Add(new BoxCollider(
-                    WindowManager.UnitarySpaceToWindowSpace(collider.leftEdge),
-                    WindowManager.UnitarySpaceToWindowSpace(collider.topEdge),
-                    WindowManager.UnitarySpaceToWindowSpace(collider.rightEdge),
-                    WindowManager.UnitarySpaceToWindowSpace(collider.bottomEdge)
-                ));
-            }
+            sceneColliders = colliders.ToList();
         }
 
 

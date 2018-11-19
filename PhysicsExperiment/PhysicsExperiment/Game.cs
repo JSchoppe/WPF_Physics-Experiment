@@ -20,7 +20,7 @@ namespace PhysicsExperiment
         public static double deltaTime { get; private set; }
 
         /// <summary>The current gravity magnitude</summary>
-        public static double gravity = 1200;
+        public static double gravity = 30;
 
         public static DirectoryInfo resourcesPath;
 

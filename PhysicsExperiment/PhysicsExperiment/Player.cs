@@ -10,12 +10,12 @@ using System.Windows.Controls;
 
 namespace PhysicsExperiment
 {
-
+    // Represents a playable character that recieves control from the keyboard.
     public class Player
     {
-
-        public double speed = 250;
-        public double jump = 600;
+        // Player stats.
+        public double speed = 8;
+        public double jump = 15;
 
         private bool takeoff = false;
         private bool ceilingHit = false;
@@ -43,12 +43,7 @@ namespace PhysicsExperiment
             currentWindow = inWindow;
             avatar = inWindow.PlayerSprite;
 
-            hitbox = new BoxCollider(
-                WindowManager.UnitarySpaceToWindowSpace(12),
-                WindowManager.UnitarySpaceToWindowSpace(3),
-                WindowManager.UnitarySpaceToWindowSpace(13),
-                WindowManager.UnitarySpaceToWindowSpace(5)
-            );
+            hitbox = new BoxCollider(12, 3, 13, 5);
 
             avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
             avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
@@ -56,7 +51,7 @@ namespace PhysicsExperiment
 
         public void Update()
         {
-            Vector movement = new Vector(0, -.01);
+            Vector movement = new Vector(0, .01);
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
@@ -80,7 +75,7 @@ namespace PhysicsExperiment
 
 
 
-            bool floorBelow = hitbox.ProjectionCast(new Vector(0, 0.1));
+            bool floorBelow = hitbox.ProjectionCast(new Vector(0, 0.01));
 
             Inventory invent= (Inventory)WindowManager.windowMatrix[0];
             if (floorBelow)
@@ -92,7 +87,7 @@ namespace PhysicsExperiment
                 invent.LiveWatchUpdate("Grounded", "false");
             }
 
-            bool ceilingAbove = hitbox.ProjectionCast(new Vector(0, -0.5));
+            bool ceilingAbove = hitbox.ProjectionCast(new Vector(0, -0.1));
 
             if (inAir)
             {
@@ -186,8 +181,8 @@ namespace PhysicsExperiment
                     avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
                     avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
 
-                    hitbox.leftEdge += WindowManager.clientX;
-                    hitbox.rightEdge += WindowManager.clientX;
+                    hitbox.leftEdge += 24;
+                    hitbox.rightEdge += 24;
 
                     currentX--;
 
@@ -195,7 +190,7 @@ namespace PhysicsExperiment
                 }
             }
 
-            if (hitbox.leftEdge > WindowManager.clientX)
+            if (hitbox.leftEdge > 24)
             {
                 Level levelRight = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Right);
                 currentWindow = levelRight;
@@ -209,8 +204,8 @@ namespace PhysicsExperiment
                     avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
                     avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
 
-                    hitbox.leftEdge -= WindowManager.clientX;
-                    hitbox.rightEdge -= WindowManager.clientX;
+                    hitbox.leftEdge -= 24;
+                    hitbox.rightEdge -= 24;
 
                     currentX++;
 
@@ -218,7 +213,7 @@ namespace PhysicsExperiment
                 }
             }
 
-            if (hitbox.topEdge > WindowManager.clientY)
+            if (hitbox.topEdge > 12)
             {
                 Level levelDown = (Level)WindowManager.GetWindowDirection(currentWindow, Direction.Down);
                 currentWindow = levelDown;
@@ -232,9 +227,9 @@ namespace PhysicsExperiment
                     avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
                     avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
 
-                    hitbox.topEdge -= WindowManager.clientY;
-                    hitbox.bottomEdge -= WindowManager.clientY;
-                    initialY -= WindowManager.clientY;
+                    hitbox.topEdge -= 12;
+                    hitbox.bottomEdge -= 12;
+                    initialY -= 12;
 
                     currentY++;
 
@@ -256,9 +251,9 @@ namespace PhysicsExperiment
                     avatar.Width = WindowManager.UnitarySpaceToWindowSpace(1);
                     avatar.Height = WindowManager.UnitarySpaceToWindowSpace(2);
 
-                    hitbox.topEdge += WindowManager.clientY;
-                    hitbox.bottomEdge += WindowManager.clientY;
-                    initialY += WindowManager.clientY;
+                    hitbox.topEdge += 12;
+                    hitbox.bottomEdge += 12;
+                    initialY += 12;
 
                     currentY--;
 
@@ -271,7 +266,11 @@ namespace PhysicsExperiment
 
         private void DrawPlayer()
         {
-            avatar.Margin = new Thickness(hitbox.leftEdge, hitbox.topEdge, avatar.Margin.Right, avatar.Margin.Bottom);
+            avatar.Margin = new Thickness(
+                WindowManager.UnitarySpaceToWindowSpace(hitbox.leftEdge),
+                WindowManager.UnitarySpaceToWindowSpace(hitbox.topEdge),
+                WindowManager.UnitarySpaceToWindowSpace(avatar.Margin.Right),
+                WindowManager.UnitarySpaceToWindowSpace(avatar.Margin.Bottom));
         }
 
         private double UpdateElevation()
