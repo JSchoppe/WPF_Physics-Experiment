@@ -56,7 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Resources\ImageTools.cs" />
+    <Compile Include="CharCustomizer.cs" />
+    <Compile Include="ImageTools.cs" />
+    <Compile Include="RuntimeDataManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,12 +99,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\PlayerSpriteComponents\Face1.png" />
-    <Resource Include="Resources\PlayerSpriteComponents\Hair1.png" />
-    <Resource Include="Resources\PlayerSpriteComponents\Pants1.png" />
-    <Resource Include="Resources\PlayerSpriteComponents\Shirt1.png" />
-    <Resource Include="Resources\PlayerSpriteComponents\Shoes1.png" />
-    <Resource Include="Resources\PlayerSpriteComponents\Skin1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Faces\Face1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Hairs\Hair1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Pants\Pants1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Shirts\Shirt1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Shoes\Shoes1.png" />
+    <Resource Include="Resources\PlayerSpriteComponents\Skins\Skin1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\InterfaceElements\HueSymbol.png" />
@@ -112,6 +114,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\InterfaceElements\ValSymbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Hairs\Hair2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Shoes\Shoes2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Skins\Skin2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
