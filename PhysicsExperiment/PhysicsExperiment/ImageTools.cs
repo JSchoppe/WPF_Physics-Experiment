@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows.Media.Imaging;
 using System.IO;
+using System.Drawing;
+using System.Collections.Generic;
+using System.Windows.Media.Imaging;
+
+// TODO: experiment with custom exceptions.
+// User-defined exceptions: https://docs.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions
 
 namespace PhysicsExperiment
 {
-    public static class ImageTools
+    /// <summary>Contains methods for manipulating bitmaps</summary>
+    public class ImageTools
     {
         /// <summary>Merges bitmaps together, using the indeces as draw order</summary>
         /// <param name="layers">The bitmaps to merge together</param>
-        /// <returns>One bitmap with all layers merged, null if the operation cannot be carried out</returns>
+        /// <returns>One bitmap with all layers merged, null if the passed parameters are invalid</returns>
         public static Bitmap MergeDown(Bitmap[] layers)
         {
             // Is there any reason the passed collection could not be operated on?
@@ -67,6 +68,10 @@ namespace PhysicsExperiment
             return returnMap;
         }
 
+        /// <summary>Applys a one pixel stroke of color around transparent image regions</summary>
+        /// <param name="toStroke">The bitmap that will be stroked</param>
+        /// <param name="strokeColor">The pixel color to use for the stroke</param>
+        /// <returns>A bitmap with one pixel stroke, null if the passed parameters are invalid</returns>
         public static Bitmap Stroke(Bitmap toStroke, Color strokeColor)
         {
             // Is there any reason the passed bitmap could not be operated on?
@@ -117,6 +122,9 @@ namespace PhysicsExperiment
             return returnMap;
         }
 
+        /// <summary>Crops a bitmap, removing transparent space from each edge</summary>
+        /// <param name="toCrop">The bitmap to be cropped</param>
+        /// <returns>A cropped bitmap, null if the passed parameters are invalid</returns>
         public static Bitmap CropByAlpha(Bitmap toCrop)
         {
             // Is there any reason the passed bitmap could not be operated on?
@@ -138,8 +146,10 @@ namespace PhysicsExperiment
             while(IsColumnEmpty(toCrop, leftCrop)) { leftCrop++; }
             while(IsColumnEmpty(toCrop, rightCrop)) { rightCrop--; }
 
+            // Create a new bitmap with the size designated by the crop.
             Bitmap returnMap = new Bitmap(rightCrop - leftCrop + 1, bottomCrop - topCrop + 1);
 
+            // Fill the return bitmap with contents of the original.
             for (int y = 0; y < returnMap.Height; y++)
             {
                 for (int x = 0; x < returnMap.Width; x++)
@@ -148,9 +158,13 @@ namespace PhysicsExperiment
                 }
             }
 
+            // Return the cropped map.
             return returnMap;
         }
 
+        /// <summary>Adds a one pixel transparent margin to a bitmap</summary>
+        /// <param name="toResize">The bitmap to add the margin to</param>
+        /// <returns>Bitmap with margin, null if the passed parameters are invalid</returns>
         public static Bitmap AddMargin(Bitmap toResize)
         {
             // Is there any reason the passed bitmap could not be operated on?
@@ -160,28 +174,77 @@ namespace PhysicsExperiment
                 return null;
             }
 
+            // Creater a wider bitmap to be returned.
             Bitmap returnMap = new Bitmap(toResize.Width + 2, toResize.Height + 2);
 
+            // For each row:
             for (int y = 0; y < toResize.Height; y++)
             {
+                // For each pixel in the row:
                 for (int x = 0; x < toResize.Width; x++)
                 {
+                    // Set the pixel, given the margin offset.
                     returnMap.SetPixel(x + 1, y + 1, toResize.GetPixel(x, y));
                 }
             }
 
+            // Set the top and bottom rows to transparent.
             for (int x = 1; x < returnMap.Width - 1; x++)
             {
                 returnMap.SetPixel(x, 0, Color.Transparent);
                 returnMap.SetPixel(x, returnMap.Height - 1, Color.Transparent);
             }
 
+            // Set the left and right columns to transparent.
             for (int y = 0; y < returnMap.Height; y++)
             {
                 returnMap.SetPixel(0, y, Color.Transparent);
                 returnMap.SetPixel(returnMap.Width - 1, y, Color.Transparent);
             }
 
+            // Return the expanded map.
+            return returnMap;
+        }
+
+        /// <summary>Adjusts the HSV values of a bitmap</summary>
+        /// <param name="toAdjust">The bitmap to adjust</param>
+        /// <param name="deltaHue">Change in hue(in degrees)</param>
+        /// <param name="deltaSat">Change in saturation(from -1 to 1)</param>
+        /// <param name="deltaVal">Change in value(from -1 to 1)</param>
+        /// <returns>Returns the adjusted bitmap, null if the passed parameters are invalid</returns>
+        public static Bitmap AdjustHSV(Bitmap toAdjust, double deltaHue, double deltaSat, double deltaVal)
+        {
+            // Is there any reason the passed bitmap could not be operated on?
+            if (toAdjust == null || toAdjust.Width == 0 || toAdjust.Height == 0)
+            {
+                // Return null.
+                return null;
+            }
+
+            // Create a bitmap to operate on.
+            Bitmap returnMap = new Bitmap(toAdjust.Width, toAdjust.Height);
+
+            // For each row:
+            for (int y = 0; y < returnMap.Height; y++)
+            {
+                // For each pixel in the row:
+                for (int x = 0; x < returnMap.Width; x++)
+                {
+                    // Get the HSV version of this pixel's color.
+                    HSVColor hsvColor = RGBtoHSV(toAdjust.GetPixel(x, y));
+
+                    // Adjust the HSV values based on input.
+                    // The setters will ensure these values remain in range.
+                    hsvColor.SetHue(hsvColor.H + deltaHue);
+                    hsvColor.SetSat(hsvColor.S + deltaSat);
+                    hsvColor.SetVal(hsvColor.V + deltaVal);
+
+                    // Convert back to RGB and set the pixel.
+                    returnMap.SetPixel(x, y, HSVtoRGB(hsvColor));
+                }
+            }
+
+            // Return the adjusted map.
             return returnMap;
         }
 
@@ -193,14 +256,24 @@ namespace PhysicsExperiment
             // Open a new memorystream.
             using (MemoryStream memory = new MemoryStream())
             {
+                // Save this bitmap into memory with PNG format.
                 bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+
+                // Set the stream position to 0.
                 memory.Position = 0;
+
+                // Declare a bitmap image to return.
                 BitmapImage bitmapimage = new BitmapImage();
+
+                // Initialize the BitmapImage.
                 bitmapimage.BeginInit();
+                // The image pulls from the memorystream.
                 bitmapimage.StreamSource = memory;
+                // Set the memory caching setting.
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapimage.EndInit();
 
+                // Return the memory backed BitmapImage.
                 return bitmapimage;
             }
         }
@@ -253,6 +326,7 @@ namespace PhysicsExperiment
             return true;
         }
 
+        // Returns a list of colors representing the surrounding pixels.
         private static List<Color> GetSurroundingPixels(Bitmap map, Point coordinate)
         {
             // Declare a list to be returned.
@@ -313,6 +387,7 @@ namespace PhysicsExperiment
             return returnList;
         }
 
+        // Converts from HSV to RGB color type.
         public static Color HSVtoRGB(HSVColor color)
         {
             // Declare doubles to store color values from 0-1.
@@ -320,50 +395,56 @@ namespace PhysicsExperiment
             double green = 0;
             double blue = 0;
 
-            // Set the base RGB values based on the hue.
-            switch (color.H / 60)
+            // Based on color conversion formulas:
+            double chroma = color.V * color.S;
+            double hueInterval = color.H / 60;
+            double intermediate = chroma * (1 - Math.Abs((hueInterval % 2) - 1));
+            double matchVal = color.V - chroma;
+
+            // Is the hue defined? Else return black.
+            if (color.V != 0)
             {
-                case 0:
-                    red = 1;
-                    green = color.H / 60.0;
+                if (hueInterval <= 1)
+                {
+                    red = chroma;
+                    green = intermediate;
                     blue = 0;
-                    break;
-                case 1:
-                    red = 1 - ((color.H - 60) / 60.0);
-                    green = 1;
+                }
+                if (hueInterval <= 2)
+                {
+                    red = intermediate;
+                    green = chroma;
                     blue = 0;
-                    break;
-                case 2:
+                }
+                if (hueInterval <= 3)
+                {
                     red = 0;
-                    green = 1;
-                    blue = (color.H - 120) / 60.0;
-                    break;
-                case 3:
+                    green = chroma;
+                    blue = intermediate;
+                }
+                if (hueInterval <= 4)
+                {
                     red = 0;
-                    green = 1 - ((color.H - 180) / 60.0);
-                    blue = 1;
-                    break;
-                case 4:
-                    red = (color.H - 240) / 60.0;
+                    green = intermediate;
+                    blue = chroma;
+                }
+                if (hueInterval <= 5)
+                {
+                    red = intermediate;
                     green = 0;
-                    blue = 1;
-                    break;
-                case 5:
-                    red = 1;
+                    blue = chroma;
+                }
+                else //hueInterval <= 6
+                {
+                    red = chroma;
                     green = 0;
-                    blue = 1 - ((color.H - 300) / 60.0);
-                    break;
+                    blue = intermediate;
+                }
+
+                red += matchVal;
+                green += matchVal;
+                blue += matchVal;
             }
-
-            // Desaturate each of the color values.
-            red = 1 - (1 - red) * color.S;
-            green = 1 - (1 - green) * color.S;
-            blue = 1 - (1 - blue) * color.S;
-
-            // Apply the value to each color channel.
-            red *= color.V;
-            green *= color.V;
-            blue *= color.V;
 
             // Return the closest representation of the HSV color.
             return Color.FromArgb
@@ -375,10 +456,7 @@ namespace PhysicsExperiment
             );
         }
 
-
-        // Converting to HSV https://cs.stackexchange.com/questions/64549/convert-hsv-to-rgb-colors
-        // nbro https://cs.stackexchange.com/users/20691/nbro
-
+        // Converts from RGB to HSV color type.
         public static HSVColor RGBtoHSV(Color color)
         {
             // Convert the color values to 0-1 range.
@@ -436,46 +514,60 @@ namespace PhysicsExperiment
                 hue, sat, val, color.A
             );
         }
+
+        // Converting to HSV https://cs.stackexchange.com/questions/64549/convert-hsv-to-rgb-colors
+        // nbro https://cs.stackexchange.com/users/20691/nbro
+        // More formulas https://en.wikipedia.org/wiki/HSL_and_HSV
     }
 
+    // Represents an HSVA color(Alpha channel simply to mirror RGBA).
     public class HSVColor
     {
-        // Color components:
-        public double H; // Hue [0, 360)
-        public double S; // Saturation [0, 1]
-        public double V; // Value [0, 1]
-        public int A; // Alpha [0, 255]
+        // Color components.
+        public double H { get; private set; } // Hue [0, 360)
+        public double S { get; private set; } // Saturation [0, 1]
+        public double V { get; private set; } // Value [0, 1]
+        public int A { get; private set; }    // Alpha [0, 255]
 
-        public HSVColor(double hue, double saturation, double value, double alpha)
+        // Methods for setting the values that ensure valid values.
+        public void SetHue(double hue)
         {
-            H = (int)(hue % 360);
-            
-            if (saturation > 1)
-            {
-                S = 1;
-            }
-            else
-            {
-                S = (int)saturation;
-            }
+            // Ensure hue is in the interval 0-360
+            H = hue % 360;
+            if (H < 0) { H += 360; }
+        }
 
-            if (value > 1)
-            {
-                V = 1;
-            }
-            else
-            {
-                V = (int)value;
-            }
+        public void SetVal(double val)
+        {
+            // Clamp value between 0-1
+            if (val < 0) { S = 0; }
+            else if (val > 1) { S = 1; }
+            else { S = val; }
+        }
 
-            if (alpha > 255)
-            {
-                A = 255;
-            }
-            else
-            {
-                A = (int)alpha;
-            }
+        public void SetSat(double sat)
+        {
+            // Clamp saturation between 0-1
+            if (sat < 0) { S = 0; }
+            else if (sat > 1) { S = 1; }
+            else { S = sat; }
+        }
+
+        public void SetAlpha(int alpha)
+        {
+            // Clamp alpha between 0-255
+            if (alpha < 0) { A = 0; }
+            else if (alpha > 255) { A = 255; }
+            else { A = alpha; }
+        }
+
+        // HSV constructor(see setters for validity of values).
+        public HSVColor(double hue, double saturation, double value, int alpha)
+        {
+            H = hue;
+            S = saturation;
+            V = value;
+            A = alpha;
         }
     }
 }

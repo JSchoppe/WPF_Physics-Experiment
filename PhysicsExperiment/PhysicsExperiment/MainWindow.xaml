@@ -40,8 +40,11 @@
         <Button Content="Erase File" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch"/>
         <Button Content="Settings" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch"/>
         <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Stretch" Click="QuitButton_Click"/>
-        <TabControl Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Stretch" TabStripPlacement="Left" Grid.ColumnSpan="2">
-            <TabItem Header="Hair">
+        <Slider x:Name="HueSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Maximum="180" SmallChange="1" TickFrequency="60" TickPlacement="TopLeft" LargeChange="30" Minimum="-180" ValueChanged="HueSlider_ValueChanged"/>
+        <Slider x:Name="SatSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" Minimum="-1" TickPlacement="TopLeft" LargeChange="0.1" ValueChanged="SatSlider_ValueChanged"/>
+        <Slider x:Name="ValSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" LargeChange="0.1" TickPlacement="TopLeft" Minimum="-1" ValueChanged="ValSlider_ValueChanged"/>
+        <TabControl x:Name="CharacterTabs" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Stretch" TabStripPlacement="Left" Grid.ColumnSpan="2" SelectionChanged="CharacterTabs_SelectionChanged">
+            <TabItem x:Name="HairTab" Header="Hair">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="HairGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -54,7 +57,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Face">
+            <TabItem x:Name="FaceTab" Header="Face">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="FaceGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -67,7 +70,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Skin">
+            <TabItem x:Name="SkinTab" Header="Skin">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="SkinGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -80,7 +83,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Shirt">
+            <TabItem x:Name="ShirtTab" Header="Shirt">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="ShirtGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -93,7 +96,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Pants">
+            <TabItem x:Name="PantsTab" Header="Pants">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="PantsGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -106,7 +109,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Shoes">
+            <TabItem x:Name="ShoesTab" Header="Shoes">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
                         <Grid x:Name="ShoesGrid" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top">
@@ -120,9 +123,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Maximum="180" SmallChange="1" TickFrequency="60" TickPlacement="TopLeft" LargeChange="30" Minimum="-180"/>
-        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" Minimum="-1" TickPlacement="TopLeft" LargeChange="0.1"/>
-        <Slider Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" LargeChange="0.1" TickPlacement="TopLeft" Minimum="-1"/>
         <Image x:Name="Avatar" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120"/>
         <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/HueSymbol.png"/>
         <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/SatSymbol.png"/>

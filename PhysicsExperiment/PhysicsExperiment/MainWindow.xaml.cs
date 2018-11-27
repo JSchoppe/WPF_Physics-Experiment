@@ -13,24 +13,32 @@ namespace PhysicsExperiment
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window
     {
-        // The path of the resources directory.
-        DirectoryInfo resourcesPath;
-
-        // Ints that store the current selected options.
-        // Possible TODO: Generalize this system to be a two dimensional array that
-        // generates tabs for folders in player sprite components.
-        int currentSkin = 0;
-        int currentFace = 0;
-        int currentHair = 0;
-        int currentPants = 0;
-        int currentShirt = 0;
-        int currentShoes = 0;
-
-        // Construction of the initial window.
+        // Constructor.
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        // The path of the resources directory.
+        private DirectoryInfo resourcesPath;
+
+        // Ints that store the current selected options.
+        // Possible TODO: Generalize this system to be a two dimensional array that
+        // generates tabs for folders in player sprite components.
+        private int currentSkin = 0;
+        private int currentFace = 0;
+        private int currentHair = 0;
+        private int currentPants = 0;
+        private int currentShirt = 0;
+        private int currentShoes = 0;
+
+        // Stores the HSV slider values for each tab of the customizer.
+        private HSVAdjustment skinAdjust = new HSVAdjustment();
+        private HSVAdjustment faceAdjust = new HSVAdjustment();
+        private HSVAdjustment hairAdjust = new HSVAdjustment();
+        private HSVAdjustment pantsAdjust = new HSVAdjustment();
+        private HSVAdjustment shirtAdjust = new HSVAdjustment();
+        private HSVAdjustment shoesAdjust = new HSVAdjustment();
 
         // This will run immediately after the window controls have initialized.
         private void StartupWindow_Loaded(object sender, RoutedEventArgs e)
@@ -112,9 +120,12 @@ namespace PhysicsExperiment
         {
             // Generate a bitmap by stacking the various selected layers.
             System.Drawing.Bitmap avatar = ImageTools.MergeDown(new System.Drawing.Bitmap[] {
-                CharCustomizer.skins[currentSkin], CharCustomizer.faces[currentFace],
-                CharCustomizer.hairs[currentHair], CharCustomizer.pants[currentPants],
-                CharCustomizer.shirts[currentShirt], CharCustomizer.shoes[currentShoes]
+                CharCustomizer.skins[currentSkin],
+                CharCustomizer.faces[currentFace],
+                CharCustomizer.hairs[currentHair],
+                CharCustomizer.pants[currentPants],
+                ImageTools.AdjustHSV(CharCustomizer.shirts[currentShirt], shirtAdjust.hueAdjust, shirtAdjust.satAdjust, shirtAdjust.valAdjust),
+                ImageTools.AdjustHSV(CharCustomizer.shoes[currentShoes], shoesAdjust.hueAdjust, shoesAdjust.satAdjust, shoesAdjust.valAdjust)
             });
 
             // Place the new avatar into memory and set it as the control source.
@@ -231,6 +242,48 @@ namespace PhysicsExperiment
             UpdateAvatar();
         }
 
+        // Updates the HSV slider values when switching tabs.
+        private void CharacterTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // When the tab has changed, set the sliders to the appropriate positions.
+            if (CharacterTabs.SelectedItem == HairTab)
+            {
+                HueSlider.Value = hairAdjust.hueAdjust;
+                SatSlider.Value = hairAdjust.satAdjust;
+                ValSlider.Value = hairAdjust.valAdjust;
+            }
+            else if (CharacterTabs.SelectedItem == FaceTab)
+            {
+                HueSlider.Value = faceAdjust.hueAdjust;
+                SatSlider.Value = faceAdjust.satAdjust;
+                ValSlider.Value = faceAdjust.valAdjust;
+            }
+            else if (CharacterTabs.SelectedItem == SkinTab)
+            {
+                HueSlider.Value = skinAdjust.hueAdjust;
+                SatSlider.Value = skinAdjust.satAdjust;
+                ValSlider.Value = skinAdjust.valAdjust;
+            }
+            else if (CharacterTabs.SelectedItem == ShirtTab)
+            {
+                HueSlider.Value = shirtAdjust.hueAdjust;
+                SatSlider.Value = shirtAdjust.satAdjust;
+                ValSlider.Value = shirtAdjust.valAdjust;
+            }
+            else if (CharacterTabs.SelectedItem == PantsTab)
+            {
+                HueSlider.Value = pantsAdjust.hueAdjust;
+                SatSlider.Value = pantsAdjust.satAdjust;
+                ValSlider.Value = pantsAdjust.valAdjust;
+            }
+            else // ShoesTab.
+            {
+                HueSlider.Value = shoesAdjust.hueAdjust;
+                SatSlider.Value = shoesAdjust.satAdjust;
+                ValSlider.Value = shoesAdjust.valAdjust;
+            }
+        }
+
         // Closes the window when the quit button is clicked.
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
@@ -240,9 +293,108 @@ namespace PhysicsExperiment
         // Define a class to save adjustment values for each customization tab.
         private class HSVAdjustment
         {
-            int hueAdjust = 0;    //[-180, +180]
-            double satAdjust = 0; //[-1, +1]
-            double valAdjust = 0; //[-1, +1]
+            public int hueAdjust = 0;    //[-180, +180]
+            public double satAdjust = 0; //[-1, +1]
+            public double valAdjust = 0; //[-1, +1]
+        }
+
+        // Redraw options when the hue slider value changes.
+        private void HueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Based on the tab, update slider values. Then apply adjustments.
+            if (CharacterTabs.SelectedItem == HairTab)
+            {
+                hairAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == FaceTab)
+            {
+                faceAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == SkinTab)
+            {
+                skinAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == ShirtTab)
+            {
+                shirtAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == PantsTab)
+            {
+                pantsAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+            else // ShoesTab.
+            {
+                shoesAdjust.hueAdjust = (int)HueSlider.Value;
+            }
+
+            // Redraw the avatar.
+            UpdateAvatar();
+        }
+
+        // Redraw options when the saturation slider value changes.
+        private void SatSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Based on the tab, update slider values. Then apply adjustments.
+            if (CharacterTabs.SelectedItem == HairTab)
+            {
+                hairAdjust.satAdjust = SatSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == FaceTab)
+            {
+                faceAdjust.satAdjust = SatSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == SkinTab)
+            {
+                skinAdjust.satAdjust = SatSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == ShirtTab)
+            {
+                shirtAdjust.satAdjust = SatSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == PantsTab)
+            {
+                pantsAdjust.satAdjust = SatSlider.Value;
+            }
+            else // ShoesTab.
+            {
+                shoesAdjust.satAdjust = SatSlider.Value;
+            }
+
+            // Redraw the avatar.
+            UpdateAvatar();
+        }
+
+        // Redraw options when the value slider value changes.
+        private void ValSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Based on the tab, update slider values. Then apply adjustments.
+            if (CharacterTabs.SelectedItem == HairTab)
+            {
+                hairAdjust.valAdjust = ValSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == FaceTab)
+            {
+                faceAdjust.valAdjust = ValSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == SkinTab)
+            {
+                skinAdjust.valAdjust = ValSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == ShirtTab)
+            {
+                shirtAdjust.valAdjust = ValSlider.Value;
+            }
+            else if (CharacterTabs.SelectedItem == PantsTab)
+            {
+                pantsAdjust.valAdjust = ValSlider.Value;
+            }
+            else // ShoesTab.
+            {
+                shoesAdjust.valAdjust = ValSlider.Value;
+            }
+
+            // Redraw the avatar.
+            UpdateAvatar();
         }
     }
 }
