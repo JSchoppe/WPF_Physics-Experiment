@@ -124,8 +124,8 @@ namespace PhysicsExperiment
                 CharCustomizer.faces[currentFace],
                 CharCustomizer.hairs[currentHair],
                 CharCustomizer.pants[currentPants],
-                ImageTools.AdjustHSV(CharCustomizer.shirts[currentShirt], shirtAdjust.hueAdjust, shirtAdjust.satAdjust, shirtAdjust.valAdjust),
-                ImageTools.AdjustHSV(CharCustomizer.shoes[currentShoes], shoesAdjust.hueAdjust, shoesAdjust.satAdjust, shoesAdjust.valAdjust)
+                CharCustomizer.shirts[currentShirt],
+                CharCustomizer.shoes[currentShoes]
             });
 
             // Place the new avatar into memory and set it as the control source.

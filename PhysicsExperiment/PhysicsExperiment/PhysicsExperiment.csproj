@@ -124,5 +124,26 @@
   <ItemGroup>
     <Resource Include="Resources\PlayerSpriteComponents\Skins\Skin2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Shirts\Shirt2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Faces\Face2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Hairs\Hair3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Hairs\Hair4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Shoes\Shoes3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Shirts\Shirt3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Faces\Face3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
