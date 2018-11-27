@@ -230,8 +230,11 @@ namespace PhysicsExperiment
                 // For each pixel in the row:
                 for (int x = 0; x < returnMap.Width; x++)
                 {
+                    // Get the color to be adjusted.
+                    Color adjustColor = toAdjust.GetPixel(x, y);
+
                     // Get the HSV version of this pixel's color.
-                    HSVColor hsvColor = RGBtoHSV(toAdjust.GetPixel(x, y));
+                    HSVColor hsvColor = RGBtoHSV(adjustColor);
 
                     // Adjust the HSV values based on input.
                     // The setters will ensure these values remain in range.
@@ -470,10 +473,8 @@ namespace PhysicsExperiment
             double val = 0; // [0, 1]
 
             // Determine the min and max RGB values.
-            double min = 0;
-            double max = 0;
-            if (red < min){ min = red; }
-            if (red > max){ max = red; }
+            double min = red;
+            double max = red;
             if (green < min){ min = green; }
             if (green > max){ max = green; }
             if (blue < min){ min = blue; }
@@ -494,15 +495,15 @@ namespace PhysicsExperiment
             {
                 if (red == max)
                 {
-                    hue = 60 * ((green - blue) / (max - min));
+                    hue = 60 * (((green - blue) / (max - min)) % 6);
                 }
                 else if(green == max)
                 {
-                    hue = 60 * (2 + (blue - red) / (max - min));
+                    hue = 60 * ((blue - red) / (max - min) + 2);
                 }
                 else // Blue == max.
                 {
-                    hue = 60 * (4 + (red - green) / (max - min));
+                    hue = 60 * ((red - green) / (max - min) + 4);
                 }
             }
 
@@ -540,9 +541,9 @@ namespace PhysicsExperiment
         public void SetVal(double val)
         {
             // Clamp value between 0-1
-            if (val < 0) { S = 0; }
-            else if (val > 1) { S = 1; }
-            else { S = val; }
+            if (val < 0) { V = 0; }
+            else if (val > 1) { V = 1; }
+            else { V = val; }
         }
 
         public void SetSat(double sat)
@@ -564,10 +565,10 @@ namespace PhysicsExperiment
         // HSV constructor(see setters for validity of values).
         public HSVColor(double hue, double saturation, double value, int alpha)
         {
-            H = hue;
-            S = saturation;
-            V = value;
-            A = alpha;
+            SetHue(hue);
+            SetSat(saturation);
+            SetVal(value);
+            SetAlpha(alpha);
         }
     }
 }

@@ -43,6 +43,9 @@ namespace PhysicsExperiment
         // This will run immediately after the window controls have initialized.
         private void StartupWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            // Set the window properties.
+            Title = "Character Customizer";
+
             // Set the bitmap scaling mode to NN, since it is pixel art.
             VisualBitmapScalingMode = BitmapScalingMode.NearestNeighbor;
 
@@ -125,7 +128,7 @@ namespace PhysicsExperiment
                 CharCustomizer.hairs[currentHair],
                 CharCustomizer.pants[currentPants],
                 CharCustomizer.shirts[currentShirt],
-                CharCustomizer.shoes[currentShoes]
+                ImageTools.AdjustHSV(CharCustomizer.shoes[currentShoes], shoesAdjust.hueAdjust, shoesAdjust.satAdjust, shoesAdjust.valAdjust)
             });
 
             // Place the new avatar into memory and set it as the control source.
