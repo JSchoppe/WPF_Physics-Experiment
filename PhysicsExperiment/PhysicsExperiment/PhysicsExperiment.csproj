@@ -145,5 +145,8 @@
   <ItemGroup>
     <Resource Include="Resources\PlayerSpriteComponents\Faces\Face3.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Pants\Pants2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

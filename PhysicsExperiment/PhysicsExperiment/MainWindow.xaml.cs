@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -127,7 +128,7 @@ namespace PhysicsExperiment
                 CharCustomizer.faces[currentFace],
                 CharCustomizer.hairs[currentHair],
                 CharCustomizer.pants[currentPants],
-                CharCustomizer.shirts[currentShirt],
+                ImageTools.AdjustHSV(CharCustomizer.shirts[currentShirt], shirtAdjust.hueAdjust, shirtAdjust.satAdjust, shirtAdjust.valAdjust),
                 ImageTools.AdjustHSV(CharCustomizer.shoes[currentShoes], shoesAdjust.hueAdjust, shoesAdjust.satAdjust, shoesAdjust.valAdjust)
             });
 
