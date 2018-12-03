@@ -58,7 +58,6 @@
     </ApplicationDefinition>
     <Compile Include="CharCustomizer.cs" />
     <Compile Include="ImageTools.cs" />
-    <Compile Include="RuntimeDataManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,6 +146,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\PlayerSpriteComponents\Pants\Pants2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Shirts\Shirt4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Faces\Face4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayerSpriteComponents\Pants\Pants3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

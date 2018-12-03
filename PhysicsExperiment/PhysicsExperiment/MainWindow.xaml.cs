@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -125,11 +124,11 @@ namespace PhysicsExperiment
             // Generate a bitmap by stacking the various selected layers.
             System.Drawing.Bitmap avatar = ImageTools.MergeDown(new System.Drawing.Bitmap[] {
                 CharCustomizer.skins[currentSkin],
+                CharCustomizer.shoes[currentShoes],
                 CharCustomizer.faces[currentFace],
                 CharCustomizer.hairs[currentHair],
                 CharCustomizer.pants[currentPants],
-                ImageTools.AdjustHSV(CharCustomizer.shirts[currentShirt], shirtAdjust.hueAdjust, shirtAdjust.satAdjust, shirtAdjust.valAdjust),
-                ImageTools.AdjustHSV(CharCustomizer.shoes[currentShoes], shoesAdjust.hueAdjust, shoesAdjust.satAdjust, shoesAdjust.valAdjust)
+                CharCustomizer.shirts[currentShirt]
             });
 
             // Place the new avatar into memory and set it as the control source.
@@ -143,7 +142,7 @@ namespace PhysicsExperiment
         private void PopulatePage(Grid toGrid, System.Drawing.Bitmap[] customMaps, Action<object, RoutedEventArgs> clickEvent)
         {
             // Variables for populating the controls for each tab in the customizer:
-            double columnActualWidth = toGrid.ActualWidth / 3; // Pixel width of the column.
+            double columnActualWidth = HairGrid.ActualWidth / 3; // Pixel width of the column.
             int currentColumn = 0; // Which of the three columns to place this control in.
             int currentItem = 0; // The current index of the item(gets tagged in the control name).
             double[] columnTravel = new double[3]; // The current vertical travel in each column.
