@@ -5,45 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhysicsExperiment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="511" Width="968" ResizeMode="NoResize" Loaded="StartupWindow_Loaded">
+        Title="Character Customizer by Jethro Schoppenhorst" Height="529" Width="506" ResizeMode="NoResize" Loaded="StartupWindow_Loaded" Icon="Resources/InterfaceElements/AppIcon.ico">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="18*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
-        <Button Content="Erase File" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch"/>
-        <Button Content="Settings" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch"/>
-        <Button x:Name="QuitButton" Content="Quit" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Stretch" Click="QuitButton_Click"/>
-        <Slider x:Name="HueSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Maximum="180" SmallChange="1" TickFrequency="60" TickPlacement="TopLeft" LargeChange="30" Minimum="-180" ValueChanged="HueSlider_ValueChanged"/>
-        <Slider x:Name="SatSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" Minimum="-1" TickPlacement="TopLeft" LargeChange="0.1" ValueChanged="SatSlider_ValueChanged"/>
-        <Slider x:Name="ValSlider" Grid.Column="6" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" LargeChange="0.1" TickPlacement="TopLeft" Minimum="-1" ValueChanged="ValSlider_ValueChanged"/>
-        <TabControl x:Name="CharacterTabs" Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Stretch" TabStripPlacement="Left" Grid.ColumnSpan="2" SelectionChanged="CharacterTabs_SelectionChanged">
+        <Button x:Name="QuitButton" Content="Quit" HorizontalAlignment="Stretch" Grid.Row="6" VerticalAlignment="Stretch" Click="QuitButton_Click" Grid.Column="4" Grid.RowSpan="2"/>
+        <Slider x:Name="HueSlider" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Maximum="180" SmallChange="1" TickFrequency="60" TickPlacement="TopLeft" LargeChange="30" Minimum="-180"
+                Thumb.DragCompleted="HueSlider_DragCompleted"
+                Thumb.DragStarted="HueSlider_DragStarted" ValueChanged="HueSlider_ValueChanged"/>
+        <Slider x:Name="SatSlider" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" Minimum="-1" TickPlacement="TopLeft" LargeChange="0.1"
+                Thumb.DragCompleted="SatSlider_DragCompleted"
+                Thumb.DragStarted="SatSlider_DragStarted" ValueChanged="SatSlider_ValueChanged"/>
+        <Slider x:Name="ValSlider" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Stretch" Maximum="1" SmallChange="0.01" LargeChange="0.1" TickPlacement="TopLeft" Minimum="-1"
+                Thumb.DragCompleted="ValSlider_DragCompleted"
+                Thumb.DragStarted="ValSlider_DragStarted" ValueChanged="ValSlider_ValueChanged"/>
+        <TabControl x:Name="CharacterTabs" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" TabStripPlacement="Left" Grid.ColumnSpan="2" SelectionChanged="CharacterTabs_SelectionChanged">
             <TabItem x:Name="HairTab" Header="Hair">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
@@ -123,9 +116,9 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Image x:Name="Avatar" Grid.Column="8" HorizontalAlignment="Left" Height="240" Grid.Row="1" Grid.RowSpan="7" VerticalAlignment="Top" Width="120"/>
-        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="9" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/HueSymbol.png"/>
-        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="11" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/SatSymbol.png"/>
-        <Image Grid.Column="5" HorizontalAlignment="Stretch" Grid.Row="13" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/ValSymbol.png"/>
+        <Image x:Name="Avatar" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch"/>
+        <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/HueSymbol.png"/>
+        <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/SatSymbol.png"/>
+        <Image Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Stretch" Source="Resources/InterfaceElements/ValSymbol.png"/>
     </Grid>
 </Window>

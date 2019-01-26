@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
-
-// TODO: experiment with custom exceptions.
-// User-defined exceptions: https://docs.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions
 
 namespace PhysicsExperiment
 {
@@ -234,7 +230,7 @@ namespace PhysicsExperiment
                     Color adjustColor = toAdjust.GetPixel(x, y);
 
                     // Get the HSV version of this pixel's color.
-                    HSVColor hsvColor = RGBtoHSV(adjustColor);
+                    HSVColor hsvColor = HSVColor.FromRGBA(adjustColor);
 
                     // Adjust the HSV values based on input.
                     // The setters will ensure these values remain in range.
@@ -243,7 +239,7 @@ namespace PhysicsExperiment
                     hsvColor.SetVal(hsvColor.V + deltaVal);
 
                     // Convert back to RGB and set the pixel.
-                    returnMap.SetPixel(x, y, HSVtoRGB(hsvColor));
+                    returnMap.SetPixel(x, y, hsvColor.ToRGBA());
                 }
             }
 
@@ -251,9 +247,12 @@ namespace PhysicsExperiment
             return returnMap;
         }
 
-
         // Saving a bitmap for image controls https://stackoverflow.com/questions/22499407/how-to-display-a-bitmap-in-a-wpf-image
         // Thanks to Garret https://stackoverflow.com/users/2659716/gerret
+
+        /// <summary>Saves a bitmap into the cache so it can be referenced by controls</summary>
+        /// <param name="bitmap">The bitmap object to cache</param>
+        /// <returns>The image source, usable inside control URIs</returns>
         public static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             // Open a new memorystream.
@@ -280,6 +279,8 @@ namespace PhysicsExperiment
                 return bitmapimage;
             }
         }
+
+        // Pixel operations:
 
         // Checks to see if a row in a bitmap is empty.
         private static bool IsRowEmpty(Bitmap map, int row)
@@ -388,187 +389,6 @@ namespace PhysicsExperiment
 
             // Return the list of surrounding pixels.
             return returnList;
-        }
-
-        // Converts from HSV to RGB color type.
-        public static Color HSVtoRGB(HSVColor color)
-        {
-            // Declare doubles to store color values from 0-1.
-            double red = 0;
-            double green = 0;
-            double blue = 0;
-
-            // Based on color conversion formulas:
-            double chroma = color.V * color.S;
-            double hueInterval = color.H / 60;
-            double intermediate = chroma * (1 - Math.Abs((hueInterval % 2) - 1));
-            double matchVal = color.V - chroma;
-
-            // Is the hue defined? Else return black.
-            if (color.V != 0)
-            {
-                if (hueInterval <= 1)
-                {
-                    red = chroma;
-                    green = intermediate;
-                    blue = 0;
-                }
-                if (hueInterval <= 2)
-                {
-                    red = intermediate;
-                    green = chroma;
-                    blue = 0;
-                }
-                if (hueInterval <= 3)
-                {
-                    red = 0;
-                    green = chroma;
-                    blue = intermediate;
-                }
-                if (hueInterval <= 4)
-                {
-                    red = 0;
-                    green = intermediate;
-                    blue = chroma;
-                }
-                if (hueInterval <= 5)
-                {
-                    red = intermediate;
-                    green = 0;
-                    blue = chroma;
-                }
-                else //hueInterval <= 6
-                {
-                    red = chroma;
-                    green = 0;
-                    blue = intermediate;
-                }
-
-                red += matchVal;
-                green += matchVal;
-                blue += matchVal;
-            }
-
-            // Return the closest representation of the HSV color.
-            return Color.FromArgb
-            (
-                color.A,
-                (int)(red * 255),
-                (int)(green * 255),
-                (int)(blue * 255)
-            );
-        }
-
-        // Converts from RGB to HSV color type.
-        public static HSVColor RGBtoHSV(Color color)
-        {
-            // Convert the color values to 0-1 range.
-            double red = color.R / 255.0;
-            double green = color.G / 255.0;
-            double blue = color.B / 255.0;
-
-            // Declare doubles to store output values.
-            double hue = 0; // [0, 360)
-            double sat = 0; // [0, 1]
-            double val = 0; // [0, 1]
-
-            // Determine the min and max RGB values.
-            double min = red;
-            double max = red;
-            if (green < min){ min = green; }
-            if (green > max){ max = green; }
-            if (blue < min){ min = blue; }
-            if (blue > max){ max = blue; }
-
-            // Value will be the maximum color value.
-            val = max;
-
-            // If the max is 0, saturation is 0(default).
-            if (max != 0)
-            {
-                sat = (max - min) / max;
-            }
-
-            // If there is a range between min and max, then there is a hue.
-            // Else hue is undefined(hue value doesn't matter so we leave it at 0).
-            if (max != min)
-            {
-                if (red == max)
-                {
-                    hue = 60 * (((green - blue) / (max - min)) % 6);
-                }
-                else if(green == max)
-                {
-                    hue = 60 * ((blue - red) / (max - min) + 2);
-                }
-                else // Blue == max.
-                {
-                    hue = 60 * ((red - green) / (max - min) + 4);
-                }
-            }
-
-            // If the hue is less than 0, wrap it back around.
-            if (hue < 0){ hue += 360; }
-
-            // Return the HSV color.
-            return new HSVColor(
-                hue, sat, val, color.A
-            );
-        }
-
-        // Converting to HSV https://cs.stackexchange.com/questions/64549/convert-hsv-to-rgb-colors
-        // nbro https://cs.stackexchange.com/users/20691/nbro
-        // More formulas https://en.wikipedia.org/wiki/HSL_and_HSV
-    }
-
-    // Represents an HSVA color(Alpha channel simply to mirror RGBA).
-    public class HSVColor
-    {
-        // Color components.
-        public double H { get; private set; } // Hue [0, 360)
-        public double S { get; private set; } // Saturation [0, 1]
-        public double V { get; private set; } // Value [0, 1]
-        public int A { get; private set; }    // Alpha [0, 255]
-
-        // Methods for setting the values that ensure valid values.
-        public void SetHue(double hue)
-        {
-            // Ensure hue is in the interval 0-360
-            H = hue % 360;
-            if (H < 0) { H += 360; }
-        }
-
-        public void SetVal(double val)
-        {
-            // Clamp value between 0-1
-            if (val < 0) { V = 0; }
-            else if (val > 1) { V = 1; }
-            else { V = val; }
-        }
-
-        public void SetSat(double sat)
-        {
-            // Clamp saturation between 0-1
-            if (sat < 0) { S = 0; }
-            else if (sat > 1) { S = 1; }
-            else { S = sat; }
-        }
-
-        public void SetAlpha(int alpha)
-        {
-            // Clamp alpha between 0-255
-            if (alpha < 0) { A = 0; }
-            else if (alpha > 255) { A = 255; }
-            else { A = alpha; }
-        }
-
-        // HSV constructor(see setters for validity of values).
-        public HSVColor(double hue, double saturation, double value, int alpha)
-        {
-            SetHue(hue);
-            SetSat(saturation);
-            SetVal(value);
-            SetAlpha(alpha);
         }
     }
 }

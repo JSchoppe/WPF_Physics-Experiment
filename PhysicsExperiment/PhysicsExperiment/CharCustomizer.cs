@@ -4,7 +4,7 @@ using System.Drawing;
 namespace PhysicsExperiment
 {
     /// <summary>Contains information for the customizer</summary>
-    public class CharCustomizer
+    public static class CharCustomizer
     {
         // Storage for the cutomization options.
         public static Bitmap[] skins;
