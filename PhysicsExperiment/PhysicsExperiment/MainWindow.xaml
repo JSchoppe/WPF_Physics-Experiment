@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhysicsExperiment"
         mc:Ignorable="d"
-        Title="Character Customizer by Jethro Schoppenhorst" Height="529" Width="506" ResizeMode="NoResize" Loaded="StartupWindow_Loaded" Icon="Resources/InterfaceElements/AppIcon.ico">
+        Title="Character Customizer by Jethro Schoppenhorst" Height="529" Width="506" ResizeMode="NoResize" Loaded="StartupWindow_Loaded" Icon="Resources/InterfaceElements/CharCustom.png">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
